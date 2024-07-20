@@ -1,0 +1,194 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import logoImage from "../../assets/Logo.png";
+import googleLogo from "../../assets/google.png";
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Alert from '../../components/Alert';
+
+function LoginPage() {
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    });
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertType, setAlertType] = useState("");
+    const navigate = useNavigate();
+
+    const togglePassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        // Validation for 400 Status / Empty Field
+        if (!form.email || !form.password) {
+            setAlertMessage("Email and password are required");
+            setAlertType("error");
+            return;
+        }
+
+        async function login() {
+            try {
+                setLoading(true);
+                const response = await axios.post(
+                    import.meta.env.VITE_BASE_URL + "/login",
+                    {
+                        email: form.email,
+                        password: form.password
+                    }
+                );
+                const accessToken = response.data.access_token;
+                localStorage.setItem("access_token", accessToken);
+
+                // Ambil role dari localStorage
+                const userRole = localStorage.getItem("user_role");
+                console.log('User Role after login:', userRole); // Debug
+
+                if (userRole) {
+                    navigate(userRole === "seller" ? "/sellerPage" : "/buyerPage");
+                } else {
+                    setAlertMessage("Role is not defined. Please register again.");
+                    setAlertType("error");
+                }
+            } catch (err) {
+                if (err.response && err.response.status === 401) {
+                    setAlertMessage("Invalid email or password");
+                    setAlertType("error");
+                } else {
+                    console.log(err);
+                    setAlertMessage("Login failed. Please try again.");
+                    setAlertType("error");
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
+        login();
+    }
+
+    function handleChange(e) {
+        const value = e.target.value;
+        const name = e.target.name;
+        setForm({
+            ...form,
+            [name]: value,
+        });
+    }
+
+    useEffect(() => {
+        const successAlert = sessionStorage.getItem("alertMessage");
+        const alertType = sessionStorage.getItem("alertType");
+        if (successAlert) {
+            setAlertMessage(successAlert);
+            setAlertType(alertType);
+            sessionStorage.removeItem("alertMessage");
+            sessionStorage.removeItem("alertType");
+        }
+    }, []);
+
+    return (
+        <div>
+            <Alert message={alertMessage} type={alertType} />
+            <div className="flex w-full h-screen">
+                <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
+                    <div className="w-80 h-80 bg-gradient-to-tr from-[#1977F1] to-[#000000] rounded-full animate-bounce" />
+                    <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />
+                </div>
+                <div className="w-full flex flex-col gap-8 p-40 lg:w-1/2">
+                    <div className="flex justify-center items-center">
+                        <img src={logoImage} alt="" className="h-14 w-15" />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-bold">Welcome to Xavier Shop</h1>
+                        <p className="text-gray-500">Enjoy your shopping anytime!</p>
+                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="relative">
+                            <label
+                                htmlFor="email"
+                                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                                E-mail
+                            </label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Email Address"
+                                className="block w-full rounded-md border-0 p-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="relative">
+                            <label
+                                htmlFor="password"
+                                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                                Password
+                            </label>
+                            <div>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="block w-full rounded-md border-0 p-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    onChange={handleChange}
+                                />
+                                <div className="absolute inset-y-0 right-2 flex items-center pr-3">
+                                    {showPassword ? (
+                                        <EyeSlashIcon
+                                            aria-hidden="true"
+                                            className="h-5 w-5 text-[#1977F1] cursor-pointer"
+                                            onClick={togglePassword}
+                                        />
+                                    ) : (
+                                        <EyeIcon
+                                            aria-hidden="true"
+                                            className="h-5 w-5 text-gray-400 cursor-pointer"
+                                            onClick={togglePassword}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex justify-end">
+                            <a href="#" className="font-semibold hover:text-[#1977F1]">Forgot Password?</a>
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-[#1977F1] text-white py-3 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Sign In
+                        </button>
+                    </form>
+                    <div className="relative my-6">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-300" />
+                        </div>
+                        <div className="relative flex justify-center text-sm">
+                            <span className="bg-white px-2 text-gray-500">Or Sign In with</span>
+                        </div>
+                    </div>
+                    <button className="w-full mt-[-20px] flex items-center justify-center py-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50">
+                        <img src={googleLogo} alt="Google" className="h-5 w-5 mr-2" />
+                        <span className="text-sm font-medium text-gray-700">Sign in with Google</span>
+                    </button>
+                    <div className="flex justify-center text-sm mt-[-10px]">
+                        <span className="text-gray-500">Don't have an account?</span>
+                        <a href="/register" className="ml-1 font-semibold text-[#1977F1] hover:underline">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            <ToastContainer />
+        </div>
+    );
+}
+
+export default LoginPage;
