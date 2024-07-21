@@ -20,7 +20,9 @@ export default function ProductContextProvider({ children }) {
 
     async function fetchProducts() {
         const token = localStorage.getItem('access_token');
-        if (!token) return;
+        if (!token){
+            navigate("/buyerPage");
+        }
 
         try {
             const response = await axios.get(

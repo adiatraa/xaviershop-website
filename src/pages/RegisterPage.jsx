@@ -3,7 +3,7 @@ import logoImage from "../assets/Logo.png";
 import googleLogo from "../assets/google.png";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, redirect } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../components/Alert';
@@ -55,24 +55,15 @@ function RegisterPage() {
 
         async function register() {
             try {
-                const url = isSellerRegister ? `${import.meta.env.VITE_BASE_URL}/seller/register` : `${import.meta.env.VITE_BASE_URL}/register`;
+                const url = isSellerRegister
+                    ? `${import.meta.env.VITE_BASE_URL}/seller/register`
+                    : `${import.meta.env.VITE_BASE_URL}/register`;
                 const response = await axios.post(url, form);
-
-                const userRole = response.data.role;
-                console.log('User role from response:', userRole);
-                if (userRole) {
-                    localStorage.setItem("user_role", userRole);
-                    console.log('Stored user role:', localStorage.getItem("user_role"));
-
-                    navigate("/");
-                } else {
-                    console.error("User role is not defined in the response");
-                    setAlertMessage("Registration failed: User role is not defined in the response");
-                    setAlertType("error");
-                }
+                console.log(response, "<< register berhasil");
+                navigate("/");
+                
             } catch (err) {
                 if (err.response && err.response.status === 400) {
-                    console.error("Error response:", err.response.data);
                     setAlertMessage("Registration failed: " + err.response.data.message);
                 } else {
                     setAlertMessage("Registration failed. Please try again.");
@@ -83,13 +74,11 @@ function RegisterPage() {
         register();
     };
 
-
-
     useEffect(() => {
-        setForm({
-            ...form,
+        setForm(prevForm => ({
+            ...prevForm,
             role: isSellerRegister ? "seller" : "user"
-        });
+        }));
     }, [isSellerRegister]);
 
     return (

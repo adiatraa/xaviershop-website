@@ -18,10 +18,7 @@ const router = createBrowserRouter([
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          const userRole = localStorage.getItem('user_role');
-          if (userRole) {
-            return redirect(userRole === "seller" ? '/sellerPage' : '/buyerPage');
-          } 
+          return redirect("/sellerPage");
         } catch (err) {
           console.log(err);
         }
@@ -37,13 +34,7 @@ const router = createBrowserRouter([
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          const userRole = localStorage.getItem('user_role');
-          console.log('User Role:', userRole); // Debug
-          if (userRole) {
-            return redirect(userRole === "seller" ? '/sellerPage' : '/buyerPage');
-          } else {
-            console.error("User role is undefined in localStorage");
-          }
+          return redirect("/");
         } catch (err) {
           console.log(err);
         }
@@ -59,13 +50,7 @@ const router = createBrowserRouter([
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          const userRole = localStorage.getItem('user_role');
-          console.log('User Role:', userRole); // Debug
-          if (userRole) {
-            return redirect(userRole === "seller" ? '/sellerPage' : '/buyerPage');
-          } else {
-            console.error("User role is undefined in localStorage");
-          }
+          return redirect("/");
         } catch (err) {
           console.log(err);
         }
@@ -125,7 +110,6 @@ const router = createBrowserRouter([
       const token = localStorage.getItem('access_token');
       if (token) {
         localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
         sessionStorage.setItem("alertMessage", "Successfully logged out");
         sessionStorage.setItem("alertType", "success");
       }

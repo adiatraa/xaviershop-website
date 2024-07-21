@@ -45,17 +45,7 @@ function LoginPage() {
                 );
                 const accessToken = response.data.access_token;
                 localStorage.setItem("access_token", accessToken);
-
-                // Ambil role dari localStorage
-                const userRole = localStorage.getItem("user_role");
-                console.log('User Role after login:', userRole); // Debug
-
-                if (userRole) {
-                    navigate(userRole === "seller" ? "/sellerPage" : "/buyerPage");
-                } else {
-                    setAlertMessage("Role is not defined. Please register again.");
-                    setAlertType("error");
-                }
+                navigate("/sellerPage");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setAlertMessage("Invalid email or password");
@@ -90,6 +80,52 @@ function LoginPage() {
             sessionStorage.removeItem("alertMessage");
             sessionStorage.removeItem("alertType");
         }
+    }, []);
+
+
+    function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        const googleToken = response.credential;
+        try {
+            setLoading(true);
+            async function login(){
+                const response = await axios.post(
+                    import.meta.env.VITE_BASE_URL + "/google-login",
+                    {
+                        googleToken,
+                        googleClientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+                    }
+                );
+                console.log(response, "<< login berhasil");
+                const accessToken = response.data.access_token;
+                localStorage.setItem("access_token", accessToken);
+                navigate("/sellerPage");
+            }
+            login();
+        } catch (err) {
+            if (err.response && err.response.status === 401) {
+                setAlertMessage("Invalid email or password");
+                setAlertType("error");
+            } else {
+                console.log(err);
+                setAlertMessage("Login failed. Please try again.");
+                setAlertType("error");
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        window.google.accounts.id.initialize({
+            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            callback: handleCredentialResponse
+        });
+        window.google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"), // Use a unique ID for the div
+            { theme: "outline", size: "large" }
+        );
+        window.google.accounts.id.prompt(); // also display the One Tap dialog
     }, []);
 
     return (
@@ -176,10 +212,11 @@ function LoginPage() {
                             <span className="bg-white px-2 text-gray-500">Or Sign In with</span>
                         </div>
                     </div>
-                    <button className="w-full mt-[-20px] flex items-center justify-center py-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50">
+                    <div id="buttonDiv"></div>
+                    {/* <div id="buttonDiv" className="w-full mt-[-20px] flex items-center justify-center py-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50">
                         <img src={googleLogo} alt="Google" className="h-5 w-5 mr-2" />
                         <span className="text-sm font-medium text-gray-700">Sign in with Google</span>
-                    </button>
+                    </div> */}
                     <div className="flex justify-center text-sm mt-[-10px]">
                         <span className="text-gray-500">Don't have an account?</span>
                         <a href="/register" className="ml-1 font-semibold text-[#1977F1] hover:underline">Sign Up</a>
