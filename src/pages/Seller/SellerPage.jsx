@@ -12,7 +12,10 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon, FunnelIcon, StarIcon } from '@heroicons/react/20/solid'
 import ProductCard from '../../components/ProductCard';
-import { ProductContext } from '../../context/product-context';
+import { ProductContext } from '../../store/product-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetch, fetchLoading } from '../../store/product-slice'
+import axios from 'axios';
 
 const filters = {
     price: [
@@ -59,11 +62,53 @@ function SellerPage() {
         return classes.filter(Boolean).join(' ')
     }
 
-    const { products, setProducts, fetchProducts } = useContext(ProductContext);
+    // const { products, setProducts, fetchProducts } = useContext(ProductContext);
+    // const count = useSelector((state) => state.counter.value)
+    const { items: products, loading } = useSelector((state) => {
+        return {
+            items: state.product.items,
+            loading: state.product.loading
+        }
+    });
+    const dispatch = useDispatch()
+
+    // const [products, setProducts] = useState([]);
+    async function fetchProducts() {
+        dispatch(fetchLoading(true));
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            navigate("/buyerPage");
+        }
+
+        try {
+            const response = await axios.get(
+                import.meta.env.VITE_BASE_URL + "/products?category=1",
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    }
+                }
+            );
+            const products = response.data.rows;
+            dispatch(fetch(products));
+            dispatch(fetchLoading(false));
+            // setProducts(products);
+        } catch (error) {
+            console.error("Failed to fetch products", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    console.log(products, "product nih")
+
 
     return (
         <div>
             <Navbar />
+            {loading && <p>Loading......</p>}
             <section aria-labelledby="featured-heading" className="relative overflow-hidden lg:h-96">
                 <div className="absolute inset-0">
                     <img

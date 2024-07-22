@@ -17,7 +17,7 @@ export default function ProductContextProvider({ children }) {
             setIsAuthenticated(true);
         }
     }, []);
-
+    
     async function fetchProducts() {
         const token = localStorage.getItem('access_token');
         if (!token){
