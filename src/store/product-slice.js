@@ -6,6 +6,7 @@ export const productSlice = createSlice({
   initialState: {
     items: [],
     loading: false,
+    error: null,
   },
   reducers: {
     fetch: (state, action) => {
@@ -21,11 +22,15 @@ export const productSlice = createSlice({
       const newProducts = state.items.filter((product) => product.id !== id);
       state.items = [...newProducts];
     },
+    getError: (state, action) => {
+        const error = action.payload;
+        state.error = error;
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { fetch, fetchLoading, productsDelete } = productSlice.actions;
+export const { fetch, fetchLoading, productsDelete, getError } = productSlice.actions;
 
 export function fetchProducts() {
   return async (dispatch) => {
@@ -56,16 +61,23 @@ export function fetchProducts() {
 
 export function deleteProducts(id) {
   return async (dispatch) => {
-    const token = localStorage.getItem("access_token");
-    const response = await axios.delete(
-      import.meta.env.VITE_BASE_URL + "/products/" + id,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    dispatch(productsDelete(id));
+      try{
+        dispatch(fetchLoading(true));
+        const token = localStorage.getItem("access_token");
+        const response = await axios.delete(
+          import.meta.env.VITE_BASE_URL + "/products/" + id,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        dispatch(productsDelete(id));
+    } catch (err){
+        dispatch(getError(err));
+    } finally {
+        dispatch(fetchLoading(false));
+    }
   };
 }
 

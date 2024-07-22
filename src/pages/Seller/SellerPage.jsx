@@ -72,32 +72,6 @@ function SellerPage() {
     });
     const dispatch = useDispatch()
 
-    // const [products, setProducts] = useState([]);
-    // async function fetchProducts() {
-    //     dispatch(fetchLoading(true));
-    //     const token = localStorage.getItem('access_token');
-    //     if (!token) {
-    //         navigate("/buyerPage");
-    //     }
-
-    //     try {
-    //         const response = await axios.get(
-    //             import.meta.env.VITE_BASE_URL + "/products?category=1",
-    //             {
-    //                 headers: {
-    //                     Authorization: "Bearer " + token,
-    //                 }
-    //             }
-    //         );
-    //         const products = response.data.rows;
-    //         dispatch(fetch(products));
-    //         dispatch(fetchLoading(false));
-    //         // setProducts(products);
-    //     } catch (error) {
-    //         console.error("Failed to fetch products", error);
-    //     }
-    // }
-
     useEffect(() => {
         dispatch(fetchProducts());
     }, []);
