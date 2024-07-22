@@ -1,12 +1,22 @@
 import axios from 'axios';
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteProducts } from '../store/product-slice';
+import { setAlertMessage, setAlertType } from '../store/alert-slice';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ProductCard({ product }) {
     const dispatch = useDispatch();
-    function handleDelete(id){
-        dispatch(deleteProducts(id));
+    const alertMessage = useSelector((state) => state.alert.alertMessage);
+    const alertType = useSelector((state) => state.alert.alertType);
+
+    function handleDelete(id) {
+        dispatch(deleteProducts(id))
+            .catch((error) => {
+                dispatch(setAlertMessage("Failed deleting this product."));
+                dispatch(setAlertType("error"));
+                toast.error("Error deleting product.");
+            });
     }
 
     return (
@@ -51,6 +61,8 @@ export default function ProductCard({ product }) {
 
                 </div>
             </div>
+            <ToastContainer />
         </div>
+
     )
 }
