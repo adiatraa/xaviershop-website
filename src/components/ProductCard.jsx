@@ -20,12 +20,26 @@ export default function ProductCard({ product }) {
                     </h3>
 
                     <p className="mt-4 text-base font-medium text-gray-900">{product.price}</p>
-                    <div className="mt-6">
+                    <div className="mt-6 cursor-pointer">
                         <a
                             href={product.href}
                             className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
                         >
                             Add to Cart
+                        </a>
+                    </div>
+                    <div className="mt-6 cursor-pointer flex gap-4">
+                        <a
+                            href={product.href}
+                            className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-red-500 px-8 py-2 text-sm font-medium text-white hover:text-white"
+                        >
+                            Delete
+                        </a>
+                        <a
+                            href={product.href}
+                            className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-[#1977F1] px-8 py-2 text-sm font-medium text-white hover:text-white"
+                        >
+                            Edit
                         </a>
                     </div>
                 </div>

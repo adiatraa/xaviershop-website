@@ -99,11 +99,8 @@ function SellerPage() {
     // }
 
     useEffect(() => {
-        // fetchProducts();
         dispatch(fetchProducts());
     }, []);
-
-    console.log(products, "product nih")
 
 
     return (
