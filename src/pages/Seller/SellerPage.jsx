@@ -10,12 +10,13 @@ import {
     MenuItem,
     MenuItems,
 } from '@headlessui/react'
-import { ChevronDownIcon, FunnelIcon, StarIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, FunnelIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductCard from '../../components/ProductCard';
 import { ProductContext } from '../../store/product-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetch, fetchLoading, fetchProducts } from '../../store/product-slice'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const filters = {
     price: [
@@ -71,6 +72,15 @@ function SellerPage() {
         }
     });
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    // function handleAdd(){
+    //     return navigate('/addProduct')
+    // }
+
+    const handleAdd = () => {
+        navigate("/addProduct");
+    }
 
     useEffect(() => {
         dispatch(fetchProducts());
@@ -228,7 +238,14 @@ function SellerPage() {
                         </div>
                     </DisclosurePanel>
                     <div className="col-start-1 row-start-1 py-4">
-                        <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8 gap-10">
+                            <button type="button" onClick={() => handleAdd()} className="relative z-10 flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">
+                                Add Product
+                                <PlusIcon
+                                    aria-hidden="true"
+                                    className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                />
+                            </button>
                             <Menu as="div" className="relative inline-block">
                                 <div className="flex">
                                     <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
