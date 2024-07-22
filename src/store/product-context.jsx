@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
 
 export const ProductContext = createContext({
     products: [],
@@ -7,21 +8,15 @@ export const ProductContext = createContext({
     fetchProducts: () => { },
 });
 
+
 export default function ProductContextProvider({ children }) {
     const [products, setProducts] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        if (token) {
-            setIsAuthenticated(true);
-        }
-    }, []);
-    
+
     async function fetchProducts() {
         const token = localStorage.getItem('access_token');
-        if (!token){
-            navigate("/buyerPage");
+        if (!token) {
+            return redirect("/buyerPage");
         }
 
         try {
@@ -41,10 +36,8 @@ export default function ProductContextProvider({ children }) {
     }
 
     useEffect(() => {
-        if (isAuthenticated) {
-            fetchProducts();
-        }
-    }, [isAuthenticated]);
+        fetchProducts();
+    }, []);
 
     return (
         <ProductContext.Provider value={{ products, setProducts, fetchProducts }}>

@@ -56,8 +56,8 @@ function RegisterPage() {
         async function register() {
             try {
                 const url = isSellerRegister
-                    ? `${import.meta.env.VITE_BASE_URL}/seller/register`
-                    : `${import.meta.env.VITE_BASE_URL}/register`;
+                    ? import.meta.env.VITE_BASE_URL + "/seller/register"
+                    : import.meta.env.VITE_BASE_URL + "/register"
                 const response = await axios.post(url, form);
                 console.log(response, "<< register berhasil");
                 navigate("/");
