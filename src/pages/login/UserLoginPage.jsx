@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../../components/Alert';
 
-function LoginPage() {
+function UserLoginPage() {
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -45,7 +45,7 @@ function LoginPage() {
                 );
                 const accessToken = response.data.access_token;
                 localStorage.setItem("access_token", accessToken);
-                navigate("/sellerPage");
+                navigate("/buyerPage");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setAlertMessage("Invalid email or password");
@@ -69,6 +69,16 @@ function LoginPage() {
             ...form,
             [name]: value,
         });
+
+        if (name === "role") {
+            if (value === "seller") {
+                navigate('/seller/login');
+                return;
+            } else if (value === "user") {
+                navigate('/');
+                return;
+            }
+        }
     }
 
     useEffect(() => {
@@ -194,6 +204,31 @@ function LoginPage() {
                                 </div>
                             </div>
                         </div>
+                        <div className="relative">
+                            <label
+                                htmlFor="role"
+                                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                                Role
+                            </label>
+                            <div className="">
+                                <select
+                                    id="role"
+                                    name="role"
+                                    value={form.role}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 p-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 appearance-none"
+                                >
+                                    <option value="user">Buyer</option>
+                                    <option value="seller">Seller</option>
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-700">
+                                    <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
+                                        <path d="M7 10l5 5 5-5H7z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                         <div className="flex justify-end">
                             <a href="#" className="font-semibold hover:text-[#1977F1]">Forgot Password?</a>
                         </div>
@@ -228,4 +263,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default UserLoginPage;

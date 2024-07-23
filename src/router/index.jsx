@@ -1,4 +1,4 @@
-import LoginPage from '../pages/login/LoginPage.jsx';
+import UserLoginPage from '../pages/login/UserLoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
 import SellerPage from '../pages/Seller/SellerPage.jsx';
 import BuyerPage from '../pages/Buyer/BuyerPage.jsx';
@@ -9,11 +9,28 @@ import {
   redirect,
   RouterProvider,
 } from "react-router-dom";
+import SellerLoginPage from '../pages/login/SellerLoginPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: <UserLoginPage />,
+    loader: () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          return redirect("/sellerPage");
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      return null;
+    }
+  },
+  {
+    path: "/seller/login",
+    element: <SellerLoginPage />,
     loader: () => {
       const token = localStorage.getItem('access_token');
       if (token) {
@@ -29,22 +46,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <RegisterPage />,
-    loader: () => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        try {
-          const decoded = jwtDecode(token);
-          return redirect("/");
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      return null;
-    }
-  },
-  {
-    path: "/seller/register",
     element: <RegisterPage />,
     loader: () => {
       const token = localStorage.getItem('access_token');

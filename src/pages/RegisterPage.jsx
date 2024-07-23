@@ -11,7 +11,6 @@ import Alert from '../components/Alert';
 function RegisterPage() {
     const location = useLocation();
     const navigate = useNavigate();
-    const isSellerRegister = location.pathname.includes('/seller/register');
 
     const [form, setForm] = useState({
         email: "",
@@ -33,16 +32,6 @@ function RegisterPage() {
     const handleChange = (e) => {
         const value = e.target.value;
         const name = e.target.name;
-
-        if (name === "role") {
-            if (value === "seller" && !isSellerRegister) {
-                navigate('/seller/register');
-                return;
-            } else if (value === "user" && isSellerRegister) {
-                navigate('/register');
-                return;
-            }
-        }
 
         setForm({
             ...form,
@@ -73,13 +62,6 @@ function RegisterPage() {
         }
         register();
     };
-
-    useEffect(() => {
-        setForm(prevForm => ({
-            ...prevForm,
-            role: isSellerRegister ? "seller" : "user"
-        }));
-    }, [isSellerRegister]);
 
     return (
         <div>
@@ -192,31 +174,6 @@ function RegisterPage() {
                                             onClick={togglePassword}
                                         />
                                     )}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="relative">
-                            <label
-                                htmlFor="role"
-                                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
-                            >
-                                Role
-                            </label>
-                            <div className="">
-                                <select
-                                    id="role"
-                                    name="role"
-                                    value={form.role}
-                                    onChange={handleChange}
-                                    className="block w-full rounded-md border-0 p-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 appearance-none"
-                                >
-                                    <option value="user">Buyer</option>
-                                    <option value="seller">Seller</option>
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-700">
-                                    <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
-                                        <path d="M7 10l5 5 5-5H7z" />
-                                    </svg>
                                 </div>
                             </div>
                         </div>
