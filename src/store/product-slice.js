@@ -16,6 +16,7 @@ export const productSlice = createSlice({
       image: "",
       imagePreview: "",
     },
+    formAction: "create",
   },
   reducers: {
     fetch: (state, action) => {
@@ -39,6 +40,17 @@ export const productSlice = createSlice({
       const form = action.payload;
       state.form[form.name] = form.value;
     },
+    editForm: (state, action) => {
+      state.form = {
+        name: action.payload.name,
+        description: action.payload.description,
+        price: action.payload.price,
+        stock: action.payload.stock,
+        categoryId: action.payload.categoryId,
+        image: action.payload.image,
+        imagePreview: action.payload.imagePreview,
+      };
+    },
     setFormReset: (state, action) => {
       state.form = {
         name: "",
@@ -51,8 +63,11 @@ export const productSlice = createSlice({
       };
     },
     setImagePreview: (state, action) => {
-        state.form.imagePreview = action.payload;
-    }
+      state.form.imagePreview = action.payload;
+    },
+    setFormActionValue: (state, action) => {
+      state.formAction = action.payload;
+    },
   },
 });
 
@@ -65,6 +80,8 @@ export const {
   addForm,
   setFormReset,
   setImagePreview,
+  editForm,
+  setFormActionValue,
 } = productSlice.actions;
 
 export function fetchProducts() {

@@ -14,7 +14,7 @@ import { ChevronDownIcon, FunnelIcon, PlusIcon } from '@heroicons/react/20/solid
 import ProductCard from '../../components/ProductCard';
 import { ProductContext } from '../../store/product-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetch, fetchLoading, fetchProducts } from '../../store/product-slice'
+import { fetch, fetchLoading, fetchProducts, setFormActionValue, setFormReset } from '../../store/product-slice'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -80,6 +80,8 @@ function SellerPage() {
 
     const handleAdd = () => {
         navigate("/addProduct");
+        dispatch(setFormActionValue("create"));
+        dispatch(setFormReset());
     }
 
     useEffect(() => {

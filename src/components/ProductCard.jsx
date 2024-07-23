@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProducts } from '../store/product-slice';
+import { deleteProducts, editForm, fetchLoading, setFormActionValue } from '../store/product-slice';
 import { setAlertMessage, setAlertType } from '../store/alert-slice';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const alertMessage = useSelector((state) => state.alert.alertMessage);
     const alertType = useSelector((state) => state.alert.alertType);
 
@@ -21,6 +23,29 @@ export default function ProductCard({ product }) {
             dispatch(setAlertType("error"));
             toast.error("Error deleting product.");
         }
+    }
+
+    async function handleEdit(id){
+        try {
+            navigate('/editProduct')
+            dispatch(fetchLoading(true));
+            const token = localStorage.getItem("access_token");
+            const response = await axios.get(
+              import.meta.env.VITE_BASE_URL + "/products/" + id,
+              {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              }
+            );
+            dispatch(editForm(response.data));
+            dispatch(setFormActionValue("edit"));
+        } catch (err) {
+            dispatch(getError(err));
+        } finally {
+            dispatch(fetchLoading(false));
+            dispatch(setFormActionValue("edit"));
+          }
     }
 
     return (
@@ -57,6 +82,7 @@ export default function ProductCard({ product }) {
                             Delete
                         </button>
                         <button
+                            onClick={() => handleEdit(product.id)}
                             className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-[#1977F1] px-8 py-2 text-sm font-medium text-white hover:text-white"
                         >
                             Edit

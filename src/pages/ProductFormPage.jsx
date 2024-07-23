@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addForm, fetchLoading, fetchProducts, setFormReset, setImagePreview } from '../store/product-slice';
+import { addForm, editForm, fetchLoading, fetchProducts, setFormReset, setImagePreview } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setAlertMessage, setAlertType } from '../store/alert-slice';
@@ -12,6 +12,7 @@ export default function ProductFormPage() {
     const navigate = useNavigate();
 
     const form = useSelector((state) => state.product.form);
+    const formAction = useSelector((state) => state.product.formAction);
     const imagePreview = useSelector((state) => state.product.form.imagePreview);
 
     function handleCancel() {
@@ -212,12 +213,22 @@ export default function ProductFormPage() {
                             <button onClick={handleCancel} type="button" className="text-sm font-semibold leading-6 text-gray-900">
                                 Cancel
                             </button>
-                            <button
+                            {
+                                formAction === "create" ? (<button
                                 type="submit"
                                 className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
                             >
-                                Save
+                                Create
+                            </button> ) : (
+                                <button
+                                type="submit"
+                                className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
+                            >
+                                Update
                             </button>
+                            )
+                            
+                            }
                         </div>
                     </div>
                 </form>
