@@ -11,16 +11,20 @@ export default function ProductCard({ product }) {
     const alertType = useSelector((state) => state.alert.alertType);
 
     function handleDelete(id) {
-        dispatch(deleteProducts(id))
-            .catch((error) => {
-                dispatch(setAlertMessage("Failed deleting this product."));
-                dispatch(setAlertType("error"));
-                toast.error("Error deleting product.");
-            });
+        try {
+            dispatch(deleteProducts(id));
+            dispatch(setAlertMessage("Success delete this product."));
+            dispatch(setAlertType("success"));
+            toast.success("Success delete this product.");
+        } catch (err) {
+            dispatch(setAlertMessage("Failed deleting this product."));
+            dispatch(setAlertType("error"));
+            toast.error("Error deleting product.");
+        }
     }
 
     return (
-        <div> 
+        <div>
             <div key={product.id} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
                 <div className="relative w-64 h-64 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                     <img
