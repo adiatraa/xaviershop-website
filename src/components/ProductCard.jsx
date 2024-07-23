@@ -22,11 +22,11 @@ export default function ProductCard({ product }) {
     return (
         <div> 
             <div key={product.id} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
-                <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
+                <div className="relative w-64 h-64 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                     <img
                         alt={product.name}
                         src={product.imgUrl}
-                        className="h-full w-full object-cover object-center"
+                        className="absolute inset-0 h-full w-full object-cover object-center"
                     />
                 </div>
                 <div className="pb-4 pt-10 text-center">
@@ -58,11 +58,9 @@ export default function ProductCard({ product }) {
                             Edit
                         </button>
                     </div>
-
                 </div>
             </div>
             <ToastContainer />
         </div>
-
     )
 }
