@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react";
 
 export const productSlice = createSlice({
   name: "product",
@@ -17,6 +18,7 @@ export const productSlice = createSlice({
       imagePreview: "",
     },
     formAction: "create",
+    editId: "",
   },
   reducers: {
     fetch: (state, action) => {
@@ -68,6 +70,9 @@ export const productSlice = createSlice({
     setFormActionValue: (state, action) => {
       state.formAction = action.payload;
     },
+    setEditId: (state, action) => {
+      state.editId = action.payload;
+    },
   },
 });
 
@@ -82,6 +87,7 @@ export const {
   setImagePreview,
   editForm,
   setFormActionValue,
+  setEditId,
 } = productSlice.actions;
 
 export function fetchProducts() {

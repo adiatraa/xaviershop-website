@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProducts, editForm, fetchLoading, setFormActionValue } from '../store/product-slice';
+import { deleteProducts, editForm, fetchLoading, setEditId, setFormActionValue } from '../store/product-slice';
 import { setAlertMessage, setAlertType } from '../store/alert-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +40,7 @@ export default function ProductCard({ product }) {
             );
             dispatch(editForm(response.data));
             dispatch(setFormActionValue("edit"));
+            dispatch(setEditId(id));
         } catch (err) {
             dispatch(getError(err));
         } finally {

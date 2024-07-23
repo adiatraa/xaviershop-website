@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addForm, editForm, fetchLoading, fetchProducts, setFormReset, setImagePreview } from '../store/product-slice';
+import { addForm, editForm, fetchLoading, fetchProducts, setFormActionValue, setFormReset, setImagePreview } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setAlertMessage, setAlertType } from '../store/alert-slice';
@@ -11,8 +11,13 @@ export default function ProductFormPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const form = useSelector((state) => state.product.form);
-    const formAction = useSelector((state) => state.product.formAction);
+    const { form, formAction, editId } = useSelector((state) => {
+        return {
+            form: state.product.form,
+            formAction: state.product.formAction,
+            editId: state.product.editId,
+        };
+    });
     const imagePreview = useSelector((state) => state.product.form.imagePreview);
 
     function handleCancel() {
@@ -32,30 +37,51 @@ export default function ProductFormPage() {
         async function addProduct() {
             try {
                 dispatch(fetchLoading(true));
-                const token = localStorage.getItem("access_token");
-                const response = await axios.post(
-                    import.meta.env.VITE_BASE_URL +
-                    `/products?cloud_name=${import.meta.env.VITE_CLOUD_NAME
-                    }&api_key=${import.meta.env.VITE_API_KEY
-                    }&api_secret=${import.meta.env.VITE_API_SECRET}`,
-                    formData,
-                    {
-                        headers: {
-                            Authorization: "Bearer " + token,
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
+                if (formAction === "create") {
+                    const token = localStorage.getItem("access_token");
+                    const response = await axios.post(
+                        import.meta.env.VITE_BASE_URL +
+                        `/products?cloud_name=${import.meta.env.VITE_CLOUD_NAME
+                        }&api_key=${import.meta.env.VITE_API_KEY
+                        }&api_secret=${import.meta.env.VITE_API_SECRET}`,
+                        formData,
+                        {
+                            headers: {
+                                Authorization: "Bearer " + token,
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }
+                    );
+                    dispatch(setAlertMessage("Success Created New Product"));
+                    dispatch(setAlertType("success"));
+                    toast.success("Success Created New Product");
+                } else {
+                    const token = localStorage.getItem("access_token");
+                    const response = await axios.put(
+                        import.meta.env.VITE_BASE_URL +
+                        `/products/${editId}?cloud_name=${import.meta.env.VITE_CLOUD_NAME
+                        }&api_key=${import.meta.env.VITE_API_KEY
+                        }&api_secret=${import.meta.env.VITE_API_SECRET}`,
+                        formData,
+                        {
+                            headers: {
+                                Authorization: "Bearer " + token,
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }
+                    );
+                    dispatch(setAlertMessage("Success Updated Product"));
+                    dispatch(setAlertType("success"));
+                    toast.success("Success Updated Product");
+                    dispatch(setFormActionValue("create"));
+                }
             } catch (err) {
                 console.log(err);
             } finally {
                 dispatch(fetchLoading(false));
                 dispatch(fetchProducts());
-                dispatch(setAlertMessage("Success Created New Product"));
-                dispatch(setAlertType("success"));
-                toast.success("Success Created New Product");
                 dispatch(setFormReset());
-                e.currentTarget?.reset();
+                e.target?.reset();
                 dispatch(setImagePreview(''));
             }
         }
@@ -215,19 +241,19 @@ export default function ProductFormPage() {
                             </button>
                             {
                                 formAction === "create" ? (<button
-                                type="submit"
-                                className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
-                            >
-                                Create
-                            </button> ) : (
-                                <button
-                                type="submit"
-                                className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
-                            >
-                                Update
-                            </button>
-                            )
-                            
+                                    type="submit"
+                                    className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
+                                >
+                                    Create
+                                </button>) : (
+                                    <button
+                                        type="submit"
+                                        className="rounded-md bg-[#1977F1] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1977F1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1977F1]"
+                                    >
+                                        Update
+                                    </button>
+                                )
+
                             }
                         </div>
                     </div>
