@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { act } from "react";
+import { setAlertMessage, setAlertType } from "./alert-slice";
+import { toast } from "react-toastify";
 
 export const productSlice = createSlice({
   name: "product",
@@ -130,8 +132,14 @@ export function deleteProducts(id) {
         }
       );
       dispatch(productsDelete(id));
+      dispatch(setAlertMessage("Success delete this product."));
+      dispatch(setAlertType("success"));
+      toast.success("Success delete this product.");
     } catch (err) {
       dispatch(getError(err));
+      dispatch(setAlertMessage("Failed deleting this product."));
+      dispatch(setAlertType("error"));
+      toast.error("Error deleting product.");
     } finally {
       dispatch(fetchLoading(false));
     }

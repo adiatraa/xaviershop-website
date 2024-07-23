@@ -15,13 +15,8 @@ export default function ProductCard({ product }) {
     function handleDelete(id) {
         try {
             dispatch(deleteProducts(id));
-            dispatch(setAlertMessage("Success delete this product."));
-            dispatch(setAlertType("success"));
-            toast.success("Success delete this product.");
         } catch (err) {
-            dispatch(setAlertMessage("Failed deleting this product."));
-            dispatch(setAlertType("error"));
-            toast.error("Error deleting product.");
+            console.log(err);
         }
     }
 
@@ -77,7 +72,6 @@ export default function ProductCard({ product }) {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     )
 }

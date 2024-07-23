@@ -5,6 +5,7 @@ import router from './router/index'
 import ProductContextProvider from "./store/product-context";
 import store from './store'
 import { Provider } from 'react-redux'
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <RouterProvider router={router} />
         </ProductContextProvider>
       </Provider>
+      <ToastContainer />
     </>
   );
 }

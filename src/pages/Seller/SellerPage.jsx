@@ -360,8 +360,7 @@ function SellerPage() {
                         </a>
                     </div>
                 </nav>
-            </main>
-
+            </main>                      
         </div>
     );
 }

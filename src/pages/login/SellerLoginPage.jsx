@@ -4,7 +4,6 @@ import axios from "axios";
 import logoImage from "../../assets/Logo.png";
 import googleLogo from "../../assets/google.png";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../../components/Alert';
 
@@ -258,7 +257,6 @@ function SellerLoginPage() {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }

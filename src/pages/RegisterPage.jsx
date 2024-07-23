@@ -4,7 +4,6 @@ import googleLogo from "../assets/google.png";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import axios from "axios";
 import { useNavigate, useLocation, redirect } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../components/Alert';
 
@@ -18,7 +17,6 @@ function RegisterPage() {
         phoneNumber: "",
         password: "",
         address: "",
-        role: isSellerRegister ? "seller" : "user"
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -44,10 +42,10 @@ function RegisterPage() {
 
         async function register() {
             try {
-                const url = isSellerRegister
-                    ? import.meta.env.VITE_BASE_URL + "/seller/register"
-                    : import.meta.env.VITE_BASE_URL + "/register"
-                const response = await axios.post(url, form);
+                const response = await axios.post(
+                    import.meta.env.VITE_BASE_URL + "/seller/register",
+                    form
+                );
                 console.log(response, "<< register berhasil");
                 navigate("/");
                 
@@ -202,7 +200,6 @@ function RegisterPage() {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }
