@@ -7,6 +7,15 @@ export const productSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    form: {
+      name: "",
+      description: "",
+      price: "",
+      stock: "",
+      categoryId: "",
+      image: "",
+      imagePreview: "",
+    },
   },
   reducers: {
     fetch: (state, action) => {
@@ -23,14 +32,40 @@ export const productSlice = createSlice({
       state.items = [...newProducts];
     },
     getError: (state, action) => {
-        const error = action.payload;
-        state.error = error;
+      const error = action.payload;
+      state.error = error;
+    },
+    addForm: (state, action) => {
+      const form = action.payload;
+      state.form[form.name] = form.value;
+    },
+    setFormReset: (state, action) => {
+      state.form = {
+        name: "",
+        description: "",
+        price: "",
+        stock: "",
+        categoryId: "",
+        image: "",
+        imagePreview: "",
+      };
+    },
+    setImagePreview: (state, action) => {
+        state.form.imagePreview = action.payload;
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { fetch, fetchLoading, productsDelete, getError } = productSlice.actions;
+export const {
+  fetch,
+  fetchLoading,
+  productsDelete,
+  getError,
+  addForm,
+  setFormReset,
+  setImagePreview,
+} = productSlice.actions;
 
 export function fetchProducts() {
   return async (dispatch) => {
@@ -61,22 +96,22 @@ export function fetchProducts() {
 
 export function deleteProducts(id) {
   return async (dispatch) => {
-      try{
-        dispatch(fetchLoading(true));
-        const token = localStorage.getItem("access_token");
-        const response = await axios.delete(
-          import.meta.env.VITE_BASE_URL + "/products/" + id,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        dispatch(productsDelete(id));
-    } catch (err){
-        dispatch(getError(err));
+    try {
+      dispatch(fetchLoading(true));
+      const token = localStorage.getItem("access_token");
+      const response = await axios.delete(
+        import.meta.env.VITE_BASE_URL + "/products/" + id,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      dispatch(productsDelete(id));
+    } catch (err) {
+      dispatch(getError(err));
     } finally {
-        dispatch(fetchLoading(false));
+      dispatch(fetchLoading(false));
     }
   };
 }

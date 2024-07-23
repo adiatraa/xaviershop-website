@@ -9,4 +9,8 @@ export default configureStore({
     product: productReducer,
     alert: alertReducer,
   },
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
