@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProducts, editForm, fetchLoading, setEditId, setFormActionValue } from '../store/product-slice';
+import { deleteProducts, editForm, editProducts, fetchLoading, setEditId, setFormActionValue } from '../store/product-slice';
 import { setAlertMessage, setAlertType } from '../store/alert-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -25,28 +25,14 @@ export default function ProductCard({ product }) {
         }
     }
 
-    async function handleEdit(id){
+    function handleEdit(id) {
         try {
-            navigate('/editProduct')
-            dispatch(fetchLoading(true));
-            const token = localStorage.getItem("access_token");
-            const response = await axios.get(
-              import.meta.env.VITE_BASE_URL + "/products/" + id,
-              {
-                headers: {
-                  Authorization: "Bearer " + token,
-                },
-              }
-            );
-            dispatch(editForm(response.data));
-            dispatch(setFormActionValue("edit"));
+            navigate("/editProduct");
+            dispatch(editProducts(id));
             dispatch(setEditId(id));
         } catch (err) {
-            dispatch(getError(err));
-        } finally {
-            dispatch(fetchLoading(false));
-            dispatch(setFormActionValue("edit"));
-          }
+            console.log(err)
+        }
     }
 
     return (

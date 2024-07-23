@@ -76,7 +76,6 @@ export const productSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   fetch,
   fetchLoading,
@@ -135,6 +134,31 @@ export function deleteProducts(id) {
       dispatch(getError(err));
     } finally {
       dispatch(fetchLoading(false));
+    }
+  };
+}
+
+export function editProducts(id) {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchLoading(true));
+      const token = localStorage.getItem("access_token");
+      const response = await axios.get(
+        import.meta.env.VITE_BASE_URL + "/products/" + id,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      dispatch(editForm(response.data));
+      dispatch(setFormActionValue("edit"));
+      dispatch(setEditId(id));
+    } catch (err) {
+      dispatch(getError(err));
+    } finally {
+      dispatch(fetchLoading(false));
+      dispatch(setFormActionValue("edit"));
     }
   };
 }
