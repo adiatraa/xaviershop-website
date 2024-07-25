@@ -3,6 +3,7 @@ import RegisterPage from '../pages/RegisterPage.jsx';
 import SellerPage from '../pages/Seller/SellerPage.jsx';
 import BuyerPage from '../pages/Buyer/BuyerPage.jsx';
 import ProductFormPage from '../pages/ProductFormPage.jsx';
+import HomePage from '../pages/HomePage.jsx';
 import { jwtDecode } from 'jwt-decode';
 import {
   createBrowserRouter,
@@ -14,6 +15,10 @@ import SellerLoginPage from '../pages/login/SellerLoginPage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/login",
     element: <UserLoginPage />,
     loader: () => {
       const token = localStorage.getItem('access_token');
