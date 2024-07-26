@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import smallDisplay from '../assets/smallDisplay.png'
+import displayThumb from '../assets/displayPhone.png'
 
 function HomePage() {
     return (
@@ -32,7 +33,17 @@ function HomePage() {
                     </div>
                 </div>
                 <div className="w-1/2 h-[45vw] bg-[#F3F4F6] flex items-center justify-center">
-                    <h1 className="font-extrabold text-[84px] leading-tight font-prompt text-black"> DRAFT SECTION</h1>
+                    <div className="flex items-center justify-center">
+                        <div className="z-10 mt-[250px] flex flex-col gap-3">
+                            <div className="bg-white rounded-xl p-3 rotate-[-2deg]" style={{ boxShadow: '0px 10px 15px -3px rgba(0,0,0,0.1)' }}>
+                                <h1 className="font-semibold text-[34px] leading-tight font-prompt text-black">Highest </h1>
+                            </div>
+                            <div className="bg-[#1977F1] rounded-xl p-3 rotate-[3deg]" style={{ boxShadow: '0px 10px 15px -3px rgba(0,0,0,0.1)' }}>
+                                <h1 className="font-semibold text-[34px] leading-tight font-prompt text-white">Quality </h1>
+                            </div>
+                        </div>
+                        <img src={displayThumb} className="ml-[-80px]" />
+                    </div>
                 </div>
             </div>
         </div>
