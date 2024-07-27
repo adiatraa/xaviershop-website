@@ -10,6 +10,7 @@ export default {
       },
       backgroundImage: {
         'bg-what': "url('./src/assets/bgWhatt.png')",
+        'bg-flash': "url('./src/assets/bgFlash.png')",
       },
     },
   },
