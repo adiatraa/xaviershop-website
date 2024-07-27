@@ -2,12 +2,13 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import smallDisplay from '../assets/smallDisplay.png'
 import displayThumb from '../assets/displayPhone.png'
+import { IoLaptop, IoPhonePortrait, IoTabletPortrait, IoWatch, IoHeadset, IoTv } from 'react-icons/io5';
 
 function HomePage() {
     return (
         <div>
             <Navbar />
-            <div className="bg-red-500 h-[45vw] w-screen flex">
+            <div className="h-[45vw] w-full flex">
                 <div className="w-1/2 h-[45vw] bg-[#F3F4F6] p-40 flex flex-col gap-12">
                     <div>
                         <div className="flex items-center">
@@ -43,6 +44,77 @@ function HomePage() {
                             </div>
                         </div>
                         <img src={displayThumb} className="ml-[-80px]" />
+                    </div>
+                </div>
+            </div>
+            <div className="h-[502px] max-w-full bg-bg-what bg-cover flex flex-col items-center mt-20 gap-24">
+                <div>
+                    <h1 className="font-extrabold text-[84px] leading-tight font-prompt text-black">
+                        What <span className="text-blue-500">we</span> provide?
+                    </h1>
+                </div>
+                <div>
+                    <div className="flex space-x-4 gap-24">
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoLaptop className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">Mac</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoPhonePortrait className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">iPhone</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoTabletPortrait className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">iPad</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoWatch className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">Watch</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoHeadset className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">Airpods</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="button"
+                                style={{ boxShadow: '0px 4px 24px -1px rgba(0,0,0,0.1)' }}
+                                className="rounded-full bg-white p-6 text-black shadow-sm hover:text-white hover:bg-blue-500"
+                            >
+                                <IoTv className="h-10 w-10" />
+                            </button>
+                            <span className="mt-8 text-sm text-center">TV & Home</span>
+                        </div>
                     </div>
                 </div>
             </div>
