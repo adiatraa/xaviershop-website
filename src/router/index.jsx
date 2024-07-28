@@ -3,6 +3,7 @@ import RegisterPage from '../pages/RegisterPage.jsx';
 import SellerPage from '../pages/Seller/SellerPage.jsx';
 import BuyerPage from '../pages/Buyer/BuyerPage.jsx';
 import ProductFormPage from '../pages/ProductFormPage.jsx';
+import ProductDetailPage from '../pages/ProductDetailPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import { jwtDecode } from 'jwt-decode';
 import {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
+  },
+  {
+    path: "/productDetail",
+    element: <ProductDetailPage />,
   },
   {
     path: "/login",

@@ -5,6 +5,7 @@ import displayThumb from '../assets/displayPhone.png'
 import bestDeal from '../assets/bestDeal.png'
 import { IoLaptop, IoPhonePortrait, IoTabletPortrait, IoWatch, IoHeadset, IoTv } from 'react-icons/io5';
 import Footer from '../components/Footer';
+import Breadcrumb from '../components/Breadcrumb'
 
 
 function HomePage() {
