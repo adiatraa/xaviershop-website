@@ -71,6 +71,72 @@ const navigation = {
 const Footer = () => {
     return (
         <footer aria-labelledby="footer-heading" className="bg-white">
+            <div className="bg-white mt-16 sm:mt-24">
+                <div className="relative sm:mt-16">
+                    <div aria-hidden="true" className="hidden sm:block">
+                        {/* Background decorations, if any */}
+                    </div>
+                    <div>
+                        <div className="relative overflow-hidden bg-blue-500 px-20 py-10 shadow-xl sm:px-20 sm:py-20">
+                            <div aria-hidden="true" className="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0">
+                                <svg
+                                    fill="none"
+                                    viewBox="0 0 1463 360"
+                                    preserveAspectRatio="xMidYMid slice"
+                                    className="absolute inset-0 h-full w-full"
+                                >
+                                    <path
+                                        d="M-82.673 72l1761.849 472.086-134.327 501.315-1761.85-472.086z"
+                                        fill="currentColor"
+                                        className="text-blue-400 text-opacity-40"
+                                    />
+                                    <path
+                                        d="M-217.088 544.086L1544.761 72l134.327 501.316-1761.849 472.086z"
+                                        fill="currentColor"
+                                        className="text-blue-600 text-opacity-40"
+                                    />
+                                </svg>
+                            </div>
+                            <div className="relative flex flex-col-reverse xl:flex-row xl:items-center">
+                                <div className="xl:flex-1 xl:pr-12 xl:mt-0 mt-12">
+                                    <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                                        Want product news and updates? <br/> Sign up for our newsletter.
+                                    </h2>
+                                </div>
+                                <form className="w-full max-w-md xl:w-auto xl:mt-0 mt-12">
+                                    <div className="flex gap-x-4">
+                                        <label htmlFor="email-address" className="sr-only">
+                                            Email address
+                                        </label>
+                                        <input
+                                            id="email-address"
+                                            name="email"
+                                            type="email"
+                                            required
+                                            placeholder="Enter your email"
+                                            autoComplete="email"
+                                            className="min-w-0 flex-auto rounded-md border-0 bg-white/10 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-white/75 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                                        >
+                                            Notify me
+                                        </button>
+                                    </div>
+                                    <p className="mt-4 text-sm leading-6 text-gray-300">
+                                        We care about your data. Read our{' '}
+                                        <a href="#" className="font-semibold text-white">
+                                            privacy&nbsp;policy
+                                        </a>
+                                        .
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <h2 id="footer-heading" className="sr-only">
                 Footer
             </h2>
