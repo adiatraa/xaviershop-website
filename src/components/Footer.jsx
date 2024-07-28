@@ -68,6 +68,7 @@ const navigation = {
         },
     ],
 }
+
 const Footer = () => {
     return (
         <footer aria-labelledby="footer-heading" className="bg-white">
