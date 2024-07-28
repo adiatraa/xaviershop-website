@@ -43,8 +43,23 @@ function CartPage() {
                             <IoCaretForward className="h-6 w-6 text-blue-500" />
                         </div>
                     </div>
-                    <div className="flex items-center h-[250px] w-[590px] p-6 rounded-xl border border-gray-400">
-                        <h1>tes</h1>
+                    <div className="flex flex-col gap-10 h-[280px] w-[590px] p-6 rounded-xl border border-gray-400">
+                        <h1 className="font-bold text-xl">Shopping Summary</h1>
+                        <div className='flex items-center space-x-80'>
+                            <h1 className='font-semibold'>Total</h1>
+                            <h1 className='text-2xl text-blue-500 font-bold'>Rp 15.000.000</h1>
+                        </div>
+                        <div>
+                            <button
+                                type="submit"
+                                className="flex max-w-xl h-12 flex-1 items-center justify-center rounded-md border bg-blue-500 px-8 text-white font-medium hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                            >
+                                CHECKOUT
+                            </button>
+                            <div className='flex items-center justify-center p-5'>
+                                <a href="#" className='font-semibold text-blue-500 hover:text-blue-500'>Back to Shopping</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
