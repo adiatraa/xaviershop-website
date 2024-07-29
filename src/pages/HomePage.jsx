@@ -6,6 +6,7 @@ import bestDeal from '../assets/bestDeal.png'
 import { IoLaptop, IoPhonePortrait, IoTabletPortrait, IoWatch, IoHeadset, IoTv } from 'react-icons/io5';
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb'
+import { Link } from 'react-router-dom'
 
 
 function HomePage() {
@@ -127,23 +128,25 @@ function HomePage() {
                     <h1 className="font-prompt font-bold text-2xl">Best Deals</h1>
                     <div>
                         <div className="flex gap-10">
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
+                            <a href="/productDetail" className="hover:text-black">
+                                <div className="p-2 mt-8 flex gap-6 items-center">
+                                    <div className="h-[160px] w-[150px] flex justify-center items-center">
+                                        <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
                                     </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex flex-col gap-12">
+                                            <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
+                                            <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
+                                        </div>
+                                        <button
+                                            // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
+                                            className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                             <div className="p-2 mt-8 flex gap-6 items-center">
                                 <div className="h-[160px] w-[150px] flex justify-center items-center">
                                     <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
@@ -317,50 +320,54 @@ function HomePage() {
                             </div>
                         </div>
                         <div className="relative z-10 flex justify-center items-center cursor-pointer gap-10">
-                            <div className="w-[428px] h-[168px] bg-white rounded-2xl">
-                                <div className="p-2 flex gap-2 items-center">
-                                    <div className="h-[150px] w-[150px] flex justify-center items-center">
-                                        <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex flex-col gap-12">
-                                            <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                            <div className="flex space-x-20">
-                                                <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                                <p className="text-[#A7A7A7]">5 left</p>
-                                            </div>
+                            <Link to="/productDetail">
+                                <div className="w-[428px] h-[168px] bg-white rounded-2xl hover:text-black">
+                                    <div className="p-2 flex gap-2 items-center">
+                                        <div className="h-[150px] w-[150px] flex justify-center items-center">
+                                            <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
                                         </div>
-                                        <div className="overflow-hidden rounded-full w-56 bg-gray-200">
-                                            <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-12">
+                                                <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
+                                                <div className="flex space-x-20">
+                                                    <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
+                                                    <p className="text-[#A7A7A7]">5 left</p>
+                                                </div>
+                                            </div>
+                                            <div className="overflow-hidden rounded-full w-56 bg-gray-200">
+                                                <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-[428px] h-[168px] bg-white rounded-2xl">
-                                <div className="p-2 flex gap-2 items-center">
-                                    <div className="h-[150px] w-[150px] flex justify-center items-center">
-                                        <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex flex-col gap-12">
-                                            <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                            <div className="flex space-x-20">
-                                                <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                                <p className="text-[#A7A7A7]">5 left</p>
-                                            </div>
+                            </Link>
+                            <Link to="/productDetail">
+                                <div className="w-[428px] h-[168px] bg-white rounded-2xl hover:text-black">
+                                    <div className="p-2 flex gap-2 items-center">
+                                        <div className="h-[150px] w-[150px] flex justify-center items-center">
+                                            <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
                                         </div>
-                                        <div className="overflow-hidden rounded-full w-56 bg-gray-200">
-                                            <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-12">
+                                                <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
+                                                <div className="flex space-x-20">
+                                                    <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
+                                                    <p className="text-[#A7A7A7]">5 left</p>
+                                                </div>
+                                            </div>
+                                            <div className="overflow-hidden rounded-full w-56 bg-gray-200">
+                                                <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                     </div>
                 </div>
             </div>
-            
+
             <Footer />
         </div>
     )

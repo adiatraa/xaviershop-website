@@ -60,7 +60,7 @@ function CartPage() {
                                         <h1 className='font-bold text-blue-500 text-lg'>1</h1>
                                         <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                     </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
+                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
                                         <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
                                     </button>
                                     <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
@@ -94,7 +94,7 @@ function CartPage() {
                                         <h1 className='font-bold text-blue-500 text-lg'>1</h1>
                                         <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                     </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
+                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
                                         <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
                                     </button>
                                     <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
@@ -128,7 +128,7 @@ function CartPage() {
                                         <h1 className='font-bold text-blue-500 text-lg'>1</h1>
                                         <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                     </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
+                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
                                         <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
                                     </button>
                                     <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>

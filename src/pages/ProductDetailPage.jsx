@@ -94,6 +94,7 @@ function ProductDetailPage() {
     const [pages, setPages] = useState([]);
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
 
+
     useEffect(() => {
         setPages([{ name: 'Product Detail', href: '/productDetail', current: true }]);
     }, []);
@@ -280,42 +281,42 @@ function ProductDetailPage() {
                         </div>
                     </div>
                     <section aria-labelledby="details-heading" className="mt-12">
-                                <h2 id="details-heading" className="sr-only">Additional details</h2>
+                        <h2 id="details-heading" className="sr-only">Additional details</h2>
 
-                                <div className="divide-y divide-gray-200 border-t">
-                                    {product.details.map((detail) => (
-                                        <Disclosure key={detail.name} as="div">
-                                            <h3>
-                                                <DisclosureButton className="group relative flex w-full items-center bg-white justify-between py-6 text-left">
-                                                    <span className="text-sm font-medium text-gray-900 group-data-[open]:text-blue-600">
-                                                        {detail.name}
-                                                    </span>
-                                                    <span className="ml-6 flex items-center">
-                                                        <PlusIcon
-                                                            aria-hidden="true"
-                                                            className="block h-6 w-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
-                                                        />
-                                                        <MinusIcon
-                                                            aria-hidden="true"
-                                                            className="hidden h-6 w-6 text-indigo-400 group-hover:text-blue-500 group-data-[open]:block"
-                                                        />
-                                                    </span>
-                                                </DisclosureButton>
-                                            </h3>
-                                            <DisclosurePanel className="prose prose-sm pb-6">
-                                                <ul role="list">
-                                                    {detail.items.map((item) => (
-                                                        <li key={item}>{item}</li>
-                                                    ))}
-                                                </ul>
-                                            </DisclosurePanel>
-                                        </Disclosure>
-                                    ))}
-                                </div>
-                            </section>
+                        <div className="divide-y divide-gray-200 border-t">
+                            {product.details.map((detail) => (
+                                <Disclosure key={detail.name} as="div">
+                                    <h3>
+                                        <DisclosureButton className="group relative flex w-full items-center bg-white justify-between py-6 text-left">
+                                            <span className="text-sm font-medium text-gray-900 group-data-[open]:text-blue-600">
+                                                {detail.name}
+                                            </span>
+                                            <span className="ml-6 flex items-center">
+                                                <PlusIcon
+                                                    aria-hidden="true"
+                                                    className="block h-6 w-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
+                                                />
+                                                <MinusIcon
+                                                    aria-hidden="true"
+                                                    className="hidden h-6 w-6 text-indigo-400 group-hover:text-blue-500 group-data-[open]:block"
+                                                />
+                                            </span>
+                                        </DisclosureButton>
+                                    </h3>
+                                    <DisclosurePanel className="prose prose-sm pb-6">
+                                        <ul role="list">
+                                            {detail.items.map((item) => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </DisclosurePanel>
+                                </Disclosure>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             </div>
-        <Footer />
+            <Footer />
         </div>
     )
 }

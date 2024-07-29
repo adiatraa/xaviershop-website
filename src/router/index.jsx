@@ -13,6 +13,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import SellerLoginPage from '../pages/login/SellerLoginPage.jsx';
+import ProductPage from '../pages/ProductPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/productDetail",
     element: <ProductDetailPage />,
+  },
+  {
+    path: "/productPage",
+    element: <ProductPage />,
   },
   {
     path: "/cartPage",

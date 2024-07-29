@@ -3,6 +3,7 @@ import axios from "axios";
 import { act } from "react";
 import { setAlertMessage, setAlertType } from "./alert-slice";
 import { toast } from "react-toastify";
+import { redirect } from "react-router-dom";
 
 export const productSlice = createSlice({
   name: "product",
@@ -91,13 +92,10 @@ export const {
   setEditId,
 } = productSlice.actions;
 
-export function fetchProducts() {
+export function fetchProducts(navigate) {
   return async (dispatch) => {
     dispatch(fetchLoading(true));
     const token = localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/buyerPage");
-    }
 
     try {
       const response = await axios.get(
@@ -113,6 +111,7 @@ export function fetchProducts() {
       dispatch(fetchLoading(false));
       // setProducts(products);
     } catch (error) {
+      // navigate("/login");
       console.error("Failed to fetch products", error);
     }
   };
