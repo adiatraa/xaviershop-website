@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchPubProducts } from '../store/public-product-slice';
 import BestDealCard from '../components/BestProductCard'
+import FlashProductCard from '../components/FlashProductCard'
 
 function HomePage() {
     const { items: products, loading } = useSelector((state) => {
@@ -176,48 +177,10 @@ function HomePage() {
                             </div>
                         </div>
                         <div className="relative z-10 flex justify-center items-center cursor-pointer gap-10">
-                            <Link to="/productDetail">
-                                <div className="w-[428px] h-[168px] bg-white rounded-2xl hover:text-black">
-                                    <div className="p-2 flex gap-2 items-center">
-                                        <div className="h-[150px] w-[150px] flex justify-center items-center">
-                                            <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <div className="flex flex-col gap-12">
-                                                <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                                <div className="flex space-x-20">
-                                                    <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                                    <p className="text-[#A7A7A7]">5 left</p>
-                                                </div>
-                                            </div>
-                                            <div className="overflow-hidden rounded-full w-56 bg-gray-200">
-                                                <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                            <Link to="/productDetail">
-                                <div className="w-[428px] h-[168px] bg-white rounded-2xl hover:text-black">
-                                    <div className="p-2 flex gap-2 items-center">
-                                        <div className="h-[150px] w-[150px] flex justify-center items-center">
-                                            <img src={bestDeal} alt="" className="rounded-3xl max-w-28" />
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <div className="flex flex-col gap-12">
-                                                <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                                <div className="flex space-x-20">
-                                                    <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                                    <p className="text-[#A7A7A7]">5 left</p>
-                                                </div>
-                                            </div>
-                                            <div className="overflow-hidden rounded-full w-56 bg-gray-200">
-                                                <div style={{ width: '50%' }} className="h-2 rounded-full bg-blue-500" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
+                            {products &&
+                                products.slice(0, 2).map((product, idx) => (
+                                    <FlashProductCard key={idx} product={product} />
+                                ))}
                         </div>
 
                     </div>
