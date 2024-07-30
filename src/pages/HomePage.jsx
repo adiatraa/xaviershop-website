@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import smallDisplay from '../assets/smallDisplay.png'
 import displayThumb from '../assets/displayPhone.png'
@@ -7,9 +7,24 @@ import { IoLaptop, IoPhonePortrait, IoTabletPortrait, IoWatch, IoHeadset, IoTv }
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb'
 import { Link } from 'react-router-dom'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, fetchPubProducts } from '../store/public-product-slice';
+import BestDealCard from '../components/BestProductCard'
 
 function HomePage() {
+    const { items: products, loading } = useSelector((state) => {
+        return {
+            items: state.publicProduct.items,
+            loading: state.publicProduct.loading
+        }
+    });
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(fetchPubProducts());
+    }, []);
+
     return (
         <div>
             <Navbar />
@@ -127,182 +142,23 @@ function HomePage() {
                 <div className="">
                     <h1 className="font-prompt font-bold text-2xl">Best Deals</h1>
                     <div>
-                        <div className="flex gap-10">
-                            <a href="/productDetail" className="hover:text-black">
-                                <div className="p-2 mt-8 flex gap-6 items-center">
-                                    <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                        <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex flex-col gap-12">
-                                            <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                            <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                        </div>
-                                        <button
-                                            // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                            className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                        >
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
+                        <section aria-labelledby="best-deals-heading">
+                            <h2 id="best-deals-heading" className="sr-only">
+                                Best Deals
+                            </h2>
+                            <div className="flex gap-10">
+                                {products &&
+                                    products.slice(0, 5).map((product, idx) => (
+                                        <BestDealCard key={idx} product={product} />
+                                    ))}
                             </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
+                            <div className="flex gap-10">
+                                {products &&
+                                    products.slice(6, 11).map((product, idx) => (
+                                        <BestDealCard key={idx} product={product} />
+                                    ))}
                             </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex gap-10">
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-2 mt-8 flex gap-6 items-center">
-                                <div className="h-[160px] w-[150px] flex justify-center items-center">
-                                    <img src={bestDeal} alt="" className="rounded-3xl max-w-full max-h-full" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex flex-col gap-12">
-                                        <h1 className="font-semibold font-prompt text-lg">iPhone 15 Pro</h1>
-                                        <h1 className="font-semibold text-blue-500">Rp 1.500.000</h1>
-                                    </div>
-                                    <button
-                                        // className="relative flex items-center w-[120px] justify-center rounded-md border border-transparent bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
-                                        className="relative flex items-center w-[120px] justify-center rounded-md border border-blue-500 bg-transparent px-2 py-2 text-sm font-medium text-blue-500 hover:text-[#1977F1] hover:bg-blue-500 hover:text-white"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>

@@ -28,11 +28,12 @@ export function fetchPubProducts() {
 
     try {
       const response = await axios.get(
-        import.meta.env.VITE_BASE_URL + "/pub/products"
+        import.meta.env.VITE_BASE_URL + "/pub/products?page[number]=2"
       );
       const products = response.data.rows;
       dispatch(fetchProducts(products));
       dispatch(fetchLoading(false));
+      console.log(products);
     } catch (error) {
       console.error("Failed to fetch public products", error);
     }

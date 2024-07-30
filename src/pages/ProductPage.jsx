@@ -15,7 +15,6 @@ import ProductCard from '../components/ProductCard';
 import { ProductContext } from '../store/product-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchPubProducts } from '../store/public-product-slice';
-import { fetchLoading } from '../store/product-slice'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -73,7 +72,6 @@ function ProductPage() {
         }
     });
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
 
     useEffect(() => {
