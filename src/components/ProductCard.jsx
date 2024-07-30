@@ -1,16 +1,13 @@
 import axios from 'axios';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProducts, editForm, editProducts, fetchLoading, setEditId, setFormActionValue } from '../store/product-slice';
-import { setAlertMessage, setAlertType } from '../store/alert-slice';
-import { ToastContainer, toast } from 'react-toastify';
+import { deleteProducts, editProducts, setEditId } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const alertMessage = useSelector((state) => state.alert.alertMessage);
-    const alertType = useSelector((state) => state.alert.alertType);
+    const accessToken = localStorage.getItem('access_token');
 
     function handleDelete(id) {
         try {
@@ -56,20 +53,22 @@ export default function ProductCard({ product }) {
                             Add to Cart
                         </button>
                     </div>
-                    <div className="mt-6 cursor-pointer flex gap-4">
-                        <button
-                            onClick={() => handleDelete(product.id)}
-                            className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-red-500 px-8 py-2 text-sm font-medium text-white hover:text-white"
-                        >
-                            Delete
-                        </button>
-                        <button
-                            onClick={() => handleEdit(product.id)}
-                            className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-[#1977F1] px-8 py-2 text-sm font-medium text-white hover:text-white"
-                        >
-                            Edit
-                        </button>
-                    </div>
+                    {accessToken && (
+                        <div className="mt-6 cursor-pointer flex gap-4">
+                            <button
+                                onClick={() => handleDelete(product.id)}
+                                className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-red-500 px-8 py-2 text-sm font-medium text-white hover:text-white"
+                            >
+                                Delete
+                            </button>
+                            <button
+                                onClick={() => handleEdit(product.id)}
+                                className="relative w-1/2 flex items-center justify-center rounded-md border border-transparent bg-[#1977F1] px-8 py-2 text-sm font-medium text-white hover:text-white"
+                            >
+                                Edit
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
