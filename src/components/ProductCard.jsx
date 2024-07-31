@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
                 </div>
                 <div className="pb-4 pt-10 text-center">
                     <h3 className="text-sm font-medium text-gray-900 hover:text-[#1977F1]">
-                        <a href={product.href} className="hover:text-[#1977F1]">
+                        <a href={"/" + product.id} className="hover:text-[#1977F1]">
                             <span aria-hidden="true" className="absolute inset-0" />
                             {product.name}
                         </a>

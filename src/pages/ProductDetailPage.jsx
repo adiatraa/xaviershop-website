@@ -18,8 +18,12 @@ import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { IoCart, IoCheckmarkDone, IoEye } from 'react-icons/io5';
 import phone1 from '../assets/bestDeal.png'
 import Footer from '../components/Footer';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsDetail, fetchPubProductsDetail } from '../store/public-product-slice';
+import axios from 'axios';
 
-const product = {
+const products = {
     name: 'iPhone 15 Pro',
     price: 'Rp 1.500.000',
     rating: 4,
@@ -65,7 +69,7 @@ const product = {
     `,
     details: [
         {
-            name: 'Features',
+            name: 'Description',
             items: [
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget ipsum eleifend, aliquet mauris sed, dapibus quam. Quisque maximus massa non urna tempor congue. Duis egestas elementum molestie. Aliquam suscipit, ante id pulvinar posuere, sapien nibh finibus enim, vulputate vulputate quam magna a odio.',
             ],
@@ -85,23 +89,43 @@ const product = {
     ],
 }
 
+function formatPrice(price) {
+    if (typeof price === 'number') {
+        return `Rp ${price.toLocaleString('id-ID')}`;
+    }
+    return price;
+}
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+// const formatPrice = {(p)} => `Rp ${price.toLocaleString('id-ID')}`;
 
 function ProductDetailPage() {
     const [pages, setPages] = useState([]);
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
-
+    const [selectedColor, setSelectedColor] = useState(products.colors[0])
+    const params = useParams();
+    const dispatch = useDispatch();
+    const { product, loading } = useSelector((state) => {
+        return {
+            product: state.publicProduct.itemsDetail,
+            loading: state.publicProduct.loading
+        }
+    });
 
     useEffect(() => {
         setPages([{ name: 'Product Detail', href: '/productDetail', current: true }]);
     }, []);
 
+    useEffect(() => {
+        dispatch(fetchPubProductsDetail(params.id));
+    }, []);
+
     return (
         <div>
             <Navbar />
+            {loading && <p>Loading......</p>}
             <Breadcrumb pages={pages} />
             <div className="bg-white">
                 <div className="mx-10 px-4 py-16 sm:px-6 sm:py-10 lg:max-w-[123rem] lg:px-8">
@@ -110,21 +134,18 @@ function ProductDetailPage() {
                         <TabGroup className="flex">
                             {/* TabPanels (main image) */}
                             <TabPanels className="aspect-h-1 aspect-w-1 w-full items-center flex justify-center">
-                                {product.images.map((image) => (
-                                    <TabPanel key={image.id}>
-                                        <img
-                                            alt={image.alt}
-                                            src={image.src}
-                                            className="h-[690px] w-[500px] object-cover object-center sm:rounded-lg" // Perbesar ukuran gambar di sini
-                                        />
-                                    </TabPanel>
-                                ))}
+                                <TabPanel>
+                                    <img
+                                        src={product.imgUrl}
+                                        className="h-[690px] w-[500px] object-cover object-center sm:rounded-lg" // Perbesar ukuran gambar di sini
+                                    />
+                                </TabPanel>
                             </TabPanels>
 
                             {/* Image selector */}
                             <div className="ml-6 hidden w-1/4 max-w-2xl sm:block lg:max-w-none lg:flex lg:flex-col lg:justify-center">
                                 <TabList className="grid grid-cols-1 gap-10">
-                                    {product.images.map((image) => (
+                                    {products.images.map((image) => (
                                         <Tab
                                             key={image.id}
                                             className="group relative flex h-32 w-32 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -169,7 +190,7 @@ function ProductDetailPage() {
                                     <div className="divide-x divide-gray-500 border-l-2">
                                         <div className="px-2 flex gap-3">
                                             <IoCart className="h-6 w-6 text-gray-400" />
-                                            <h1 className="font-bold">100</h1>
+                                            <h1 className="font-bold">{product.stock}</h1>
                                             <p>Stock</p>
                                         </div>
                                     </div>
@@ -192,7 +213,7 @@ function ProductDetailPage() {
 
                             <div className="mt-20 flex gap-4 items-center">
                                 <h2 className="sr-only">Product information</h2>
-                                <p className="text-3xl font-prompt tracking-tight text-blue-500">{product.price}</p>
+                                <p className="text-3xl font-prompt tracking-tight text-blue-500">{formatPrice(product.price)}</p>
                                 <p className="line-through text-gray-500">Rp 10.000.000</p>
                                 <div className="h-6 w-30 bg-[#3AB137] p-1 rounded-md">
                                     <p className="text-[12px] text-white font-bold">20%</p>
@@ -202,7 +223,7 @@ function ProductDetailPage() {
                                 <h3 className="sr-only">Description</h3>
                                 <div
                                     dangerouslySetInnerHTML={{ __html: product.description }}
-                                    className="space-y-6 text-base text-gray-700"
+                                    className="space-y-6 text-base text-gray-700 max-w-2xl text-justify"
                                 />
                             </div>
 
@@ -229,7 +250,7 @@ function ProductDetailPage() {
 
                                     <fieldset aria-label="Choose a color" className="mt-2">
                                         <RadioGroup value={selectedColor} onChange={setSelectedColor} className="flex items-center space-x-3">
-                                            {product.colors.map((color) => (
+                                            {products.colors.map((color) => (
                                                 <Radio
                                                     key={color.name}
                                                     value={color}
@@ -284,7 +305,7 @@ function ProductDetailPage() {
                         <h2 id="details-heading" className="sr-only">Additional details</h2>
 
                         <div className="divide-y divide-gray-200 border-t">
-                            {product.details.map((detail) => (
+                            {products.details.map((detail) => (
                                 <Disclosure key={detail.name} as="div">
                                     <h3>
                                         <DisclosureButton className="group relative flex w-full items-center bg-white justify-between py-6 text-left">
