@@ -12,6 +12,7 @@ export default function ProductCard({ product }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const accessToken = localStorage.getItem('access_token');
+    const userRole = localStorage.getItem('user_role');
 
     function handleDelete(id) {
         try {
@@ -99,7 +100,7 @@ export default function ProductCard({ product }) {
                             Add to Cart
                         </button>
                     </div>
-                    {accessToken && (
+                    {userRole === 'seller' && (
                         <div className="mt-6 cursor-pointer flex gap-4">
                             <button
                                 onClick={() => handleDelete(product.id)}
