@@ -7,7 +7,7 @@ import { useNavigate, useLocation, redirect } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../components/Alert';
 
-function RegisterPage() {
+function SellerRegisterPage() {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ function RegisterPage() {
                     form
                 );
                 console.log(response, "<< register berhasil");
-                navigate("/");
+                navigate("/seller/login");
                 
             } catch (err) {
                 if (err.response && err.response.status === 400) {
@@ -204,4 +204,4 @@ function RegisterPage() {
     );
 }
 
-export default RegisterPage;
+export default SellerRegisterPage;

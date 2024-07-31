@@ -43,7 +43,9 @@ function SellerLoginPage() {
                     }
                 );
                 const accessToken = response.data.access_token;
+                const userRole = response.data.role;
                 localStorage.setItem("access_token", accessToken);
+                localStorage.setItem("user_role", userRole);
                 navigate("/sellerPage");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
@@ -74,7 +76,7 @@ function SellerLoginPage() {
                 navigate('/seller/login');
                 return;
             } else if (value === "user") {
-                navigate('/');
+                navigate('/login');
                 return;
             }
         }
@@ -253,7 +255,7 @@ function SellerLoginPage() {
                     </div> */}
                     <div className="flex justify-center text-sm mt-[-10px]">
                         <span className="text-gray-500">Don't have an account?</span>
-                        <a href="/register" className="ml-1 font-semibold text-[#1977F1] hover:underline">Sign Up</a>
+                        <a href="/seller/register" className="ml-1 font-semibold text-[#1977F1] hover:underline">Sign Up</a>
                     </div>
                 </div>
             </div>

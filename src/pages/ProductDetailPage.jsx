@@ -114,6 +114,10 @@ function ProductDetailPage() {
         }
     });
 
+    function formatStock(stock) {
+        return stock < 0 ? 0 : stock;
+    }
+
     useEffect(() => {
         setPages([{ name: 'Product Detail', href: '/productDetail', current: true }]);
     }, []);
@@ -190,7 +194,7 @@ function ProductDetailPage() {
                                     <div className="divide-x divide-gray-500 border-l-2">
                                         <div className="px-2 flex gap-3">
                                             <IoCart className="h-6 w-6 text-gray-400" />
-                                            <h1 className="font-bold">{product.stock}</h1>
+                                            <h1 className="font-bold">{formatStock(product.stock)}</h1>
                                             <p>Stock</p>
                                         </div>
                                     </div>

@@ -43,8 +43,10 @@ function UserLoginPage() {
                     }
                 );
                 const accessToken = response.data.access_token;
+                const userRole = response.data.role;
                 localStorage.setItem("access_token", accessToken);
-                navigate("/buyerPage");
+                localStorage.setItem("user_role", userRole);
+                navigate("/");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setAlertMessage("Invalid email or password");

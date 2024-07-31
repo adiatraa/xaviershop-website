@@ -1,5 +1,5 @@
 import UserLoginPage from '../pages/login/UserLoginPage.jsx';
-import RegisterPage from '../pages/RegisterPage.jsx';
+import RegisterPage from '../pages/SellerRegisterPage.jsx';
 import SellerPage from '../pages/Seller/SellerPage.jsx';
 import BuyerPage from '../pages/Buyer/BuyerPage.jsx';
 import ProductFormPage from '../pages/ProductFormPage.jsx';
@@ -14,6 +14,8 @@ import {
 } from "react-router-dom";
 import SellerLoginPage from '../pages/login/SellerLoginPage.jsx';
 import ProductPage from '../pages/ProductPage.jsx';
+import UserRegisterPage from '../pages/UserRegisterPage.jsx';
+import SellerRegisterPage from '../pages/SellerRegisterPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "/:id",
+    path: "/productPage/:id",
     element: <ProductDetailPage />,
   },
   {
@@ -40,14 +42,15 @@ const router = createBrowserRouter([
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          return redirect("/sellerPage");
+          console.log("Token decoded:", decoded);
+          return redirect("/");
         } catch (err) {
-          console.log(err);
+          redirect("/login");
         }
       }
       return null;
     }
-  },
+  },  
   {
     path: "/seller/login",
     element: <SellerLoginPage />,
@@ -66,13 +69,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: <UserRegisterPage />,
     loader: () => {
       const token = localStorage.getItem('access_token');
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          return redirect("/");
+          return redirect("/login");
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      return null;
+    }
+  },
+  {
+    path: "/seller/register",
+    element: <SellerRegisterPage />,
+    loader: () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          return redirect("/seller/login");
         } catch (err) {
           console.log(err);
         }
@@ -103,29 +122,29 @@ const router = createBrowserRouter([
       }
     }
   },
-  {
-    path: "/buyerPage",
-    element: <BuyerPage />,
-    loader: () => {
-      const token = localStorage.getItem('access_token');
-      const redirectUrl = "/";
-      if (!token) {
-        sessionStorage.setItem("alertMessage", "Please login to access this page");
-        sessionStorage.setItem("alertType", "error");
-        return redirect(redirectUrl);
-      } else {
-        try {
-          const decoded = jwtDecode(token);
-          console.log("Token decoded successfully:", decoded);
-          return null;
-        } catch (err) {
-          sessionStorage.setItem("alertMessage", "Please login to access this page");
-          sessionStorage.setItem("alertType", "error");
-          return redirect(redirectUrl);
-        }
-      }
-    }
-  },
+  // {
+  //   path: "/buyerPage",
+  //   element: <BuyerPage />,
+  //   loader: () => {
+  //     const token = localStorage.getItem('access_token');
+  //     const redirectUrl = "/";
+  //     if (!token) {
+  //       sessionStorage.setItem("alertMessage", "Please login to access this page");
+  //       sessionStorage.setItem("alertType", "error");
+  //       return redirect(redirectUrl);
+  //     } else {
+  //       try {
+  //         const decoded = jwtDecode(token);
+  //         console.log("Token decoded successfully:", decoded);
+  //         return null;
+  //       } catch (err) {
+  //         sessionStorage.setItem("alertMessage", "Please login to access this page");
+  //         sessionStorage.setItem("alertType", "error");
+  //         return redirect(redirectUrl);
+  //       }
+  //     }
+  //   }
+  // },
   {
     path: "/addProduct",
     element: <ProductFormPage />,
@@ -181,7 +200,7 @@ const router = createBrowserRouter([
         sessionStorage.setItem("alertMessage", "Successfully logged out");
         sessionStorage.setItem("alertType", "success");
       }
-      return redirect('/');
+      return redirect('/login');
     }
   },
 ]);

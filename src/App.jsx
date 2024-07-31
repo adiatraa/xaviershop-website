@@ -8,12 +8,12 @@ import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
+      <ToastContainer />
       <Provider store={store}>
         <ProductContextProvider>
           <RouterProvider router={router}/>
         </ProductContextProvider>
       </Provider>
-      <ToastContainer />
     </>
   );
 }
