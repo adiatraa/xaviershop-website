@@ -27,6 +27,13 @@ export default function ProductCard({ product }) {
         }
     }
 
+    function formatPrice(price) {
+        if (typeof price === 'number') {
+            return `Rp ${price.toLocaleString('id-ID')}`;
+        }
+        return price;
+    }
+
     return (
         <div>
             <div key={product.id} className="group relative border-b border-r border-gray-200 p-4 sm:p-6">
@@ -45,7 +52,7 @@ export default function ProductCard({ product }) {
                         </a>
                     </h3>
 
-                    <p className="mt-4 text-base font-medium text-gray-900">{product.price}</p>
+                    <p className="mt-4 text-base font-medium text-gray-900">{formatPrice(product.price)}</p>
                     <div className="mt-6 cursor-pointer">
                         <button
                             className="relative flex items-center w-full justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:text-[#1977F1] hover:bg-gray-200"
