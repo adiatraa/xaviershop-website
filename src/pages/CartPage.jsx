@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
-import Breadcrumb from '../components/Breadcrumb'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
+import Breadcrumb from '../components/Breadcrumb';
 import { IoTicket, IoCaretForward, IoAddOutline, IoRemoveOutline, IoTrashBin, IoHeart } from 'react-icons/io5';
-import phone1 from '../assets/bestDeal.png';
 import Footer from '../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCarts, fetchCart, fetchCarts } from '../store/cart-slice';
+import { deleteCarts, fetchCarts } from '../store/cart-slice';
 
 function CartPage() {
     const [pages, setPages] = useState([]);
@@ -20,19 +19,15 @@ function CartPage() {
 
     useEffect(() => {
         dispatch(fetchCarts());
-    }, []);
+    }, [dispatch]);
 
-    const cartsNew = [];
-    carts.forEach((cart) => {
-        cartsNew.push({
-            id: cart.id,
-            productId: cart.productId,
-            quantity: cart.quantity,
-            product: products.find((product) => {
-                return cart.productId === product.id;
-            }),
-        });
-    })
+    const cartsNew = carts.map((cart) => ({
+        id: cart.id,
+        productId: cart.productId,
+        quantity: cart.quantity,
+        product: products.find((product) => cart.productId === product.id),
+    }));
+
     carts = [...cartsNew];
 
     function formatPrice(price) {
@@ -43,9 +38,7 @@ function CartPage() {
     }
 
     const calculateTotalPrice = () => {
-        return carts.reduce((total, cart) => {
-            return total + (cart.product.price * cart.quantity);
-        }, 0);
+        return carts.reduce((total, cart) => total + (cart.product.price * cart.quantity), 0);
     };
 
     const totalPrice = calculateTotalPrice();
@@ -63,29 +56,16 @@ function CartPage() {
             <Navbar />
             <Breadcrumb pages={pages} />
             <div className="flex mt-16 ml-[11rem] gap-10">
-                <div className='flex flex-col gap-10'>
-                    <div className="flex items-center space-x-[700px] h-[70px] w-[1100px] bg-transparent p-6 rounded-xl border border-gray-400">
-                        <div className="flex gap-8">
-                            <input
-                                id="candidates"
-                                name="candidates"
-                                type="checkbox"
-                                aria-describedby="candidates-description"
-                                className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <h1 className="font-semibold">Select All</h1>
-                        </div>
-                        <div className="flex gap-4">
-                            <a href="#" className="font-semibold text-blue-500 cursor-pointer hover:text-blue-500">UPDATE CART</a>
-                            <div className="divide-x divide-gray-500 border-l-2">
-                                <a href="#" className="ml-4 font-semibold text-red-500 hover:text-red-500">REMOVE</a>
-                            </div>
-                        </div>
+                {carts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-[300px] w-[1100px] bg-gray-100 border border-gray-300 rounded-xl p-6">
+                        <h1 className="text-xl font-bold text-blue-500">Cart is empty, get your product asap!</h1>
+                        <a href="/productPage" className="mt-4 font-semibold text-blue-500 hover:text-blue-600">Start Shopping</a>
                     </div>
-                    {carts &&
-                        carts.map((cart) => (
-                            <div key={cart.id} className='flex gap-4  h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
-                                <div className='flex gap-4 justify-center items-center'>
+                ) : (
+                    <>
+                        <div className='flex flex-col gap-10'>
+                            <div className="flex items-center space-x-[700px] h-[70px] w-[1100px] bg-transparent p-6 rounded-xl border border-gray-400">
+                                <div className="flex gap-8">
                                     <input
                                         id="candidates"
                                         name="candidates"
@@ -93,66 +73,87 @@ function CartPage() {
                                         aria-describedby="candidates-description"
                                         className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
-                                    <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
-                                        <img src={cart.product.imgUrl} alt="" className='h-full w-max' />
+                                    <h1 className="font-semibold">Select All</h1>
+                                </div>
+                                <div className="flex gap-4">
+                                    <a href="#" className="font-semibold text-blue-500 cursor-pointer hover:text-blue-500">UPDATE CART</a>
+                                    <div className="divide-x divide-gray-500 border-l-2">
+                                        <a href="#" className="ml-4 font-semibold text-red-500 hover:text-red-500">REMOVE</a>
                                     </div>
                                 </div>
-                                <div className='flex flex-col p-2 gap-5'>
-                                    <h1 className="font-bold text-xl font-montserrat">{cart.product.name}</h1>
-                                    <h1 className="font-bold text-blue-500 text-xl">{formatPrice(cart.product.price)}</h1>
-                                    <div className='flex space-x-[27rem] justify-center items-center'>
-                                        <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
-                                        <div className='flex gap-4 items-center justify-center'>
-                                            <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
-                                                <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                                <h1 className='font-bold text-blue-500 text-lg'>1</h1>
-                                                <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                            </div>
+                            {carts.map((cart) => (
+                                <div key={cart.id} className='flex gap-4 h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
+                                    <div className='flex gap-4 justify-center items-center'>
+                                        <input
+                                            id="candidates"
+                                            name="candidates"
+                                            type="checkbox"
+                                            aria-describedby="candidates-description"
+                                            className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        />
+                                        <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
+                                            <img src={cart.product.imgUrl} alt="" className='h-full w-max' />
+                                        </div>
+                                    </div>
+                                    <div className='flex flex-col p-2 gap-5'>
+                                        <h1 className="font-bold text-xl font-montserrat">{cart.product.name}</h1>
+                                        <h1 className="font-bold text-blue-500 text-xl">{formatPrice(cart.product.price)}</h1>
+                                        <div className='flex space-x-[27rem] justify-center items-center'>
+                                            <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
+                                            <div className='flex gap-4 items-center justify-center'>
+                                                <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
+                                                    <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                    <h1 className='font-bold text-blue-500 text-lg'>1</h1>
+                                                    <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                </div>
+                                                <button onClick={() => handleDelete(cart.id)} className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
+                                                    <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
+                                                </button>
+                                                <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
+                                                    <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
+                                                </button>
                                             </div>
-                                            <button onClick={() => handleDelete(cart.id)} className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
-                                                <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                            </button>
-                                            <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
-                                                <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                </div>
-                <div className="flex flex-col gap-10">
-                    <div className="flex cursor-pointer items-center h-[70px] w-[590px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
-                        <div className="flex space-x-80">
-                            <div className="flex gap-6">
-                                <IoTicket className="h-6 w-6 text-blue-500" />
-                                <h1 className="font-bold text-blue-500">I have promo code</h1>
-                            </div>
-                            <IoCaretForward className="h-6 w-6 text-blue-500" />
+                            ))}
                         </div>
-                    </div>
-                    <div className="flex flex-col gap-10 h-[280px] w-[590px] p-6 rounded-xl border border-gray-400">
-                        <h1 className="font-bold text-xl">Shopping Summary</h1>
-                        <div className='flex items-center space-x-80'>
-                            <h1 className='font-semibold'>Total</h1>
-                            <h1 className='text-2xl text-blue-500 font-bold'>{formatPrice(totalPrice)}</h1>
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="flex max-w-xl h-12 flex-1 items-center justify-center rounded-md border bg-blue-500 px-8 text-white font-medium hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
-                            >
-                                CHECKOUT
-                            </button>
-                            <div className='flex items-center justify-center p-5'>
-                                <a href="#" className='font-semibold text-blue-500 hover:text-blue-500'>Back to Shopping</a>
+                        <div className="flex flex-col gap-10">
+                            <div className="flex cursor-pointer items-center h-[70px] w-[590px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
+                                <div className="flex space-x-80">
+                                    <div className="flex gap-6">
+                                        <IoTicket className="h-6 w-6 text-blue-500" />
+                                        <h1 className="font-bold text-blue-500">I have promo code</h1>
+                                    </div>
+                                    <IoCaretForward className="h-6 w-6 text-blue-500" />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-10 h-[280px] w-[590px] p-6 rounded-xl border border-gray-400">
+                                <h1 className="font-bold text-xl">Shopping Summary</h1>
+                                <div className='flex items-center space-x-80'>
+                                    <h1 className='font-semibold'>Total</h1>
+                                    <h1 className='text-2xl text-blue-500 font-bold'>{formatPrice(totalPrice)}</h1>
+                                </div>
+                                <div>
+                                    <button
+                                        type="submit"
+                                        className="flex max-w-xl h-12 flex-1 items-center justify-center rounded-md border bg-blue-500 px-8 text-white font-medium hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                                    >
+                                        CHECKOUT
+                                    </button>
+                                    <div className='flex items-center justify-center p-5'>
+                                        <a href="#" className='font-semibold text-blue-500 hover:text-blue-500'>Back to Shopping</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </>
+                )}
             </div>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default CartPage
+export default CartPage;
