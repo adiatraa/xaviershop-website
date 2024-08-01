@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import { IoTicket, IoCaretForward, IoAddOutline, IoRemoveOutline, IoTrashBin, IoHeart } from 'react-icons/io5';
 import Footer from '../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCarts, fetchCarts, fetchCart } from '../store/cart-slice';
+import { deleteCarts, fetchCarts, fetchCart, updateCartQuantity } from '../store/cart-slice';
 import { fetchProducts } from '../store/product-slice';
 
 function CartPage() {
@@ -73,6 +73,16 @@ function CartPage() {
         }
     }
 
+    function handleDecrementQuantity(id, currentQuantity) {
+        const newQuantity = currentQuantity - 1;
+        dispatch(updateCartQuantity(id, newQuantity));
+    }
+
+    function handleIncrementQuantity(id, currentQuantity) {
+        const newQuantity = currentQuantity + 1;
+        dispatch(updateCartQuantity(id, newQuantity));
+    }
+
     return (
         <div>
             <Navbar />
@@ -126,9 +136,9 @@ function CartPage() {
                                             <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
                                             <div className='flex gap-4 items-center justify-center'>
                                                 <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
-                                                    <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                    <button onClick={() => handleIncrementQuantity(cart.id, cart.quantity)} className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                                     <h1 className='font-bold text-blue-500 text-lg'>{cart.quantity}</h1>
-                                                    <button onClick={() => handleDelete(cart.id)} className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                    <button onClick={() => handleDecrementQuantity(cart.id, cart.quantity)} className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                                 </div>
                                                 <button onClick={() => handleDelete(cart.id)} className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
                                                     <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
