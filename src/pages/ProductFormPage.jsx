@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addForm, editForm, fetchLoading, fetchProducts, setFormActionValue, setFormReset, setImagePreview } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { setAlertMessage, setAlertType } from '../store/alert-slice';
 import { ToastContainer, toast } from 'react-toastify';
 
 export default function ProductFormPage() {
@@ -52,8 +51,6 @@ export default function ProductFormPage() {
                             },
                         }
                     );
-                    dispatch(setAlertMessage("Success Created New Product"));
-                    dispatch(setAlertType("success"));
                     toast.success("Success Created New Product");
                 } else {
                     const token = localStorage.getItem("access_token");
@@ -70,8 +67,6 @@ export default function ProductFormPage() {
                             },
                         }
                     );
-                    dispatch(setAlertMessage("Success Updated Product"));
-                    dispatch(setAlertType("success"));
                     toast.success("Success Updated Product");
                     dispatch(setFormActionValue("create"));
                 }

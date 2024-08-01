@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { act } from "react";
-import { setAlertMessage, setAlertType } from "./alert-slice";
 import { toast } from "react-toastify";
 import { redirect } from "react-router-dom";
+import { fetchCarts } from "./cart-slice";
 
 export const productSlice = createSlice({
   name: "product",
@@ -99,7 +99,7 @@ export function fetchProducts(navigate) {
 
     try {
       const response = await axios.get(
-        import.meta.env.VITE_BASE_URL + "/products?category=1",
+        import.meta.env.VITE_BASE_URL + "/products?page[number]=2&category=1",
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -131,13 +131,9 @@ export function deleteProducts(id) {
         }
       );
       dispatch(productsDelete(id));
-      dispatch(setAlertMessage("Success delete this product."));
-      dispatch(setAlertType("success"));
       toast.success("Success delete this product.");
     } catch (err) {
       dispatch(getError(err));
-      dispatch(setAlertMessage("Failed deleting this product."));
-      dispatch(setAlertType("error"));
       toast.error("Error deleting product.");
     } finally {
       dispatch(fetchLoading(false));

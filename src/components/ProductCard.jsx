@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoCart } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchCarts } from '../store/cart-slice';
 
 
 export default function ProductCard({ product }) {
@@ -13,6 +14,9 @@ export default function ProductCard({ product }) {
     const navigate = useNavigate();
     const accessToken = localStorage.getItem('access_token');
     const userRole = localStorage.getItem('user_role');
+
+    const products = useSelector((state) => state.publicProduct.items);
+    const carts = useSelector((state) => state.cart.items);
 
     function handleDelete(id) {
         try {
@@ -45,20 +49,42 @@ export default function ProductCard({ product }) {
 
     async function handleAddToCart(id) {
         console.log("Add to cart clicked", id)
+        console.log(carts, "semua cart");
         try {
-            const response = await axios.post(
-                import.meta.env.VITE_BASE_URL + '/carts/' + id,
-                {
-                    quantity: 1,
-                },
-                {
-                    headers: {
-                        Authorization: "Bearer " + accessToken,
+            const cartFoundIndex = carts.findIndex((el) => {
+                return el.productId === id;
+            });
+            console.log(cartFoundIndex, "<< index cart found")
+            const cartFound = carts[cartFoundIndex];
+            if (cartFoundIndex === -1) {
+                const response = await axios.post(
+                    import.meta.env.VITE_BASE_URL + '/carts/' + id,
+                    {
+                        quantity: 1,
                     },
-                }
-            )
-            console.log(response.data, "<< resp data");
-            toast.success("Item added to the cart!");
+                    {
+                        headers: {
+                            Authorization: "Bearer " + accessToken,
+                        },
+                    }
+                )
+                console.log(response.data, "<< resp data post");
+                toast.success("Item added to the cart!");
+            } else {
+                const response = await axios.patch(
+                    import.meta.env.VITE_BASE_URL + '/carts/' + id,
+                    {
+                        quantity: cartFound.quantity + 1,
+                    },
+                    {
+                        headers: {
+                            Authorization: "Bearer " + accessToken,
+                        },
+                    }
+                )
+                console.log(response.data, "<< resp data patch");
+                toast.success("Item added to the cart!");
+            }
         } catch (err) {
             if (err.response.status === 401) {
                 toast.error("Please login first!");

@@ -71,6 +71,7 @@ function SellerPage() {
             loading: state.product.loading
         }
     });
+    const carts = useSelector((state) => state.cart.items);
     const dispatch = useDispatch()
     const navigate = useNavigate()
 

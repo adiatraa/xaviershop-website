@@ -4,11 +4,13 @@ import Breadcrumb from '../components/Breadcrumb';
 import { IoTicket, IoCaretForward, IoAddOutline, IoRemoveOutline, IoTrashBin, IoHeart } from 'react-icons/io5';
 import Footer from '../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCarts, fetchCarts } from '../store/cart-slice';
+import { deleteCarts, fetchCarts, fetchCart } from '../store/cart-slice';
+import { fetchProducts } from '../store/product-slice';
 
 function CartPage() {
     const [pages, setPages] = useState([]);
     const dispatch = useDispatch();
+    const userRole = localStorage.getItem('user_role');
 
     useEffect(() => {
         setPages([{ name: 'Cart Page', href: '/cartPage', current: true }]);
@@ -16,18 +18,33 @@ function CartPage() {
 
     let carts = useSelector((state) => state.cart.items);
     const products = useSelector((state) => state.publicProduct.items);
+    const productAuth  = useSelector((state) => state.product.items);
 
     useEffect(() => {
+        dispatch(fetchProducts());
         dispatch(fetchCarts());
-    }, [dispatch]);
+    }, []);
 
-    const cartsNew = carts.map((cart) => ({
-        id: cart.id,
-        productId: cart.productId,
-        quantity: cart.quantity,
-        product: products.find((product) => cart.productId === product.id),
-    }));
-
+    const cartsNew = [];
+    if (userRole === 'seller') {
+        carts.forEach((cart) => {
+            cartsNew.push({
+                id: cart.id,
+                productId: cart.productId,
+                quantity: cart.quantity,
+                product: productAuth.find((product) => cart.productId === product.id),
+            });
+        });
+    } else {
+        carts.forEach((cart) => {
+            cartsNew.push({
+                id: cart.id,
+                productId: cart.productId,
+                quantity: cart.quantity,
+                product: products.find((product) => cart.productId === product.id),
+            });
+        });
+    }
     carts = [...cartsNew];
 
     function formatPrice(price) {
@@ -38,7 +55,12 @@ function CartPage() {
     }
 
     const calculateTotalPrice = () => {
-        return carts.reduce((total, cart) => total + (cart.product.price * cart.quantity), 0);
+        return carts.reduce((total, cart) => {
+            if (cart.product) {
+                return total + (cart.product.price * cart.quantity);
+            }
+            return total;
+        }, 0);
     };
 
     const totalPrice = calculateTotalPrice();
@@ -82,7 +104,8 @@ function CartPage() {
                                     </div>
                                 </div>
                             </div>
-                            {carts.map((cart) => (
+                            {carts && 
+                            carts.map((cart) => (
                                 <div key={cart.id} className='flex gap-4 h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
                                     <div className='flex gap-4 justify-center items-center'>
                                         <input
@@ -93,12 +116,12 @@ function CartPage() {
                                             className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                         />
                                         <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
-                                            <img src={cart.product.imgUrl} alt="" className='h-full w-max' />
+                                            <img src={cart.product?.imgUrl} alt="" className='h-full w-max' />
                                         </div>
                                     </div>
                                     <div className='flex flex-col p-2 gap-5'>
-                                        <h1 className="font-bold text-xl font-montserrat">{cart.product.name}</h1>
-                                        <h1 className="font-bold text-blue-500 text-xl">{formatPrice(cart.product.price)}</h1>
+                                        <h1 className="font-bold text-xl font-montserrat">{cart.product?.name}</h1>
+                                        <h1 className="font-bold text-blue-500 text-xl">{cart.product ? formatPrice(cart.product.price) : 'N/A'}</h1>
                                         <div className='flex space-x-[27rem] justify-center items-center'>
                                             <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
                                             <div className='flex gap-4 items-center justify-center'>
