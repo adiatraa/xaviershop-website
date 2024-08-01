@@ -42,6 +42,14 @@ function CartPage() {
         return price;
     }
 
+    const calculateTotalPrice = () => {
+        return carts.reduce((total, cart) => {
+            return total + (cart.product.price * cart.quantity);
+        }, 0);
+    };
+
+    const totalPrice = calculateTotalPrice();
+
     return (
         <div>
             <Navbar />
@@ -118,7 +126,7 @@ function CartPage() {
                         <h1 className="font-bold text-xl">Shopping Summary</h1>
                         <div className='flex items-center space-x-80'>
                             <h1 className='font-semibold'>Total</h1>
-                            <h1 className='text-2xl text-blue-500 font-bold'>Rp 15.000.000</h1>
+                            <h1 className='text-2xl text-blue-500 font-bold'>{formatPrice(totalPrice)}</h1>
                         </div>
                         <div>
                             <button
