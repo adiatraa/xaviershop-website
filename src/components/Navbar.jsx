@@ -7,12 +7,14 @@ import userProfile from '../assets/userProfile.jpeg';
 import profile from '../assets/profile.jpeg';
 import { setAuth, setRole } from '../store/auth-slice';
 import { useLocation } from 'react-router-dom';
+import { selectCartItemCount } from '../store/cart-slice';
 
 export default function Navbar() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const userRole = useSelector((state) => state.auth.user_role);
     const location = useLocation();
+    const cartItemCount = useSelector(selectCartItemCount);
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
@@ -70,7 +72,7 @@ export default function Navbar() {
                                             aria-hidden="true"
                                             className={navIconSign('/cartPage')}
                                         />
-                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cartItemCount}</span>
                                         <span className="sr-only">items in cart, view bag</span>
                                     </a>
                                 </div>

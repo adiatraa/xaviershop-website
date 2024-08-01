@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchPubProducts } from '../store/public-product-slice';
 import BestDealCard from '../components/BestProductCard'
 import FlashProductCard from '../components/FlashProductCard'
+import { fetchCarts } from '../store/cart-slice'
 
 function HomePage() {
     const { items: products, loading } = useSelector((state) => {
@@ -20,10 +21,14 @@ function HomePage() {
         }
     });
     const dispatch = useDispatch()
+    const userRole = localStorage.getItem("user_role");
 
 
     useEffect(() => {
         dispatch(fetchPubProducts());
+        if(userRole === "seller" || userRole === "user") {
+            dispatch(fetchCarts());
+        }
     }, []);
 
     return (

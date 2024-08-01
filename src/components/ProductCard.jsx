@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProducts, editProducts, setEditId } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
@@ -93,6 +93,10 @@ export default function ProductCard({ product }) {
             }
         }
     }
+
+    useEffect(() => {
+        dispatch(fetchCarts());
+    }, []);
 
     return (
         <div>

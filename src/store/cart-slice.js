@@ -115,4 +115,8 @@ export function updateCartQuantity(id, newQuantity) {
     };
   }
 
+  export const selectCartItemCount = (state) => {
+    return state.cart.items.reduce((total, item) => total + item.quantity, 0);
+  };
+
 export default cartSlice.reducer;
