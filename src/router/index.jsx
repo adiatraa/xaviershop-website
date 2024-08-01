@@ -7,6 +7,8 @@ import ProductDetailPage from '../pages/ProductDetailPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import CartPage from '../pages/CartPage.jsx';
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   createBrowserRouter,
   redirect,
@@ -33,6 +35,20 @@ const router = createBrowserRouter([
   {
     path: "/cartPage",
     element: <CartPage />,
+    loader: () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Token decoded:", decoded);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        return redirect("/login");
+      }
+      return null;
+    }
   },
   {
     path: "/login",
