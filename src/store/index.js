@@ -4,6 +4,7 @@ import productReducer from "./product-slice"
 import alertReducer from "./alert-slice"
 import publicProductSlice from './public-product-slice';
 import cartReducer from './cart-slice';
+import authReducer from './auth-slice';
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     alert: alertReducer,
     publicProduct: publicProductSlice,
     cart: cartReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
