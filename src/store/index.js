@@ -3,6 +3,7 @@ import counterReducer from "./counterSlice"
 import productReducer from "./product-slice"
 import alertReducer from "./alert-slice"
 import publicProductSlice from './public-product-slice';
+import cartReducer from './cart-slice';
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export default configureStore({
     product: productReducer,
     alert: alertReducer,
     publicProduct: publicProductSlice,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

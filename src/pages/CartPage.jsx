@@ -4,13 +4,43 @@ import Breadcrumb from '../components/Breadcrumb'
 import { IoTicket, IoCaretForward, IoAddOutline, IoRemoveOutline, IoTrashBin, IoHeart } from 'react-icons/io5';
 import phone1 from '../assets/bestDeal.png';
 import Footer from '../components/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, fetchCarts } from '../store/cart-slice';
 
 function CartPage() {
     const [pages, setPages] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setPages([{ name: 'Cart Page', href: '/cartPage', current: true }]);
     }, []);
+
+    let carts = useSelector((state) => state.cart.items);
+    const products = useSelector((state) => state.publicProduct.items);
+
+    useEffect(() => {
+        dispatch(fetchCarts());
+    }, []);
+
+    const cartsNew = [];
+    carts.forEach((cart) => {
+        cartsNew.push({
+            id: cart.id,
+            productId: cart.productId,
+            quantity: cart.quantity,
+            product: products.find((product) => {
+                return cart.productId === product.id;
+            }),
+        });
+    })
+    carts = [...cartsNew];
+
+    function formatPrice(price) {
+        if (typeof price === 'number') {
+            return `Rp ${price.toLocaleString('id-ID')}`;
+        }
+        return price;
+    }
 
     return (
         <div>
@@ -36,108 +66,43 @@ function CartPage() {
                             </div>
                         </div>
                     </div>
-                    <div className='flex gap-4  h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
-                        <div className='flex gap-4 justify-center items-center'>
-                            <input
-                                id="candidates"
-                                name="candidates"
-                                type="checkbox"
-                                aria-describedby="candidates-description"
-                                className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
-                                <img src={phone1} alt="" className='h-full w-max' />
-                            </div>
-                        </div>
-                        <div className='flex flex-col p-2 gap-5'>
-                            <h1 className="font-bold text-xl font-montserrat">iPhone 15 Pro</h1>
-                            <h1 className="font-bold text-blue-500 text-xl">Rp 1.500.000</h1>
-                            <div className='flex space-x-[27rem] justify-center items-center'>
-                                <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
-                                <div className='flex gap-4 items-center justify-center'>
-                                    <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
-                                        <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                        <h1 className='font-bold text-blue-500 text-lg'>1</h1>
-                                        <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                    {carts &&
+                        carts.map((cart) => (
+                            <div key={cart.id} className='flex gap-4  h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
+                                <div className='flex gap-4 justify-center items-center'>
+                                    <input
+                                        id="candidates"
+                                        name="candidates"
+                                        type="checkbox"
+                                        aria-describedby="candidates-description"
+                                        className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                    />
+                                    <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
+                                        <img src={cart.product.imgUrl} alt="" className='h-full w-max' />
                                     </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
-                                        <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
-                                        <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
+                                </div>
+                                <div className='flex flex-col p-2 gap-5'>
+                                    <h1 className="font-bold text-xl font-montserrat">{cart.product.name}</h1>
+                                    <h1 className="font-bold text-blue-500 text-xl">{formatPrice(cart.product.price)}</h1>
+                                    <div className='flex space-x-[27rem] justify-center items-center'>
+                                        <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
+                                        <div className='flex gap-4 items-center justify-center'>
+                                            <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
+                                                <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                <h1 className='font-bold text-blue-500 text-lg'>1</h1>
+                                                <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                            </div>
+                                            <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
+                                                <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
+                                            </button>
+                                            <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
+                                                <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className='flex gap-4  h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
-                        <div className='flex gap-4 justify-center items-center'>
-                            <input
-                                id="candidates"
-                                name="candidates"
-                                type="checkbox"
-                                aria-describedby="candidates-description"
-                                className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
-                                <img src={phone1} alt="" className='h-full w-max' />
-                            </div>
-                        </div>
-                        <div className='flex flex-col p-2 gap-5'>
-                            <h1 className="font-bold text-xl font-montserrat">iPhone 15 Pro</h1>
-                            <h1 className="font-bold text-blue-500 text-xl">Rp 1.500.000</h1>
-                            <div className='flex space-x-[27rem] justify-center items-center'>
-                                <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
-                                <div className='flex gap-4 items-center justify-center'>
-                                    <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
-                                        <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                        <h1 className='font-bold text-blue-500 text-lg'>1</h1>
-                                        <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                    </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
-                                        <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
-                                        <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='flex gap-4  h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
-                        <div className='flex gap-4 justify-center items-center'>
-                            <input
-                                id="candidates"
-                                name="candidates"
-                                type="checkbox"
-                                aria-describedby="candidates-description"
-                                className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <div className='h-[153px] w-[150px] rounded-xl flex justify-center'>
-                                <img src={phone1} alt="" className='h-full w-max' />
-                            </div>
-                        </div>
-                        <div className='flex flex-col p-2 gap-5'>
-                            <h1 className="font-bold text-xl font-montserrat">iPhone 15 Pro</h1>
-                            <h1 className="font-bold text-blue-500 text-xl">Rp 1.500.000</h1>
-                            <div className='flex space-x-[27rem] justify-center items-center'>
-                                <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
-                                <div className='flex gap-4 items-center justify-center'>
-                                    <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
-                                        <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                        <h1 className='font-bold text-blue-500 text-lg'>1</h1>
-                                        <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                    </div>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
-                                        <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
-                                    <button className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-blue-500 justify-center rounded-xl group'>
-                                        <IoHeart className="h-6 w-6 text-gray-400 group-hover:text-white" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        ))}
                 </div>
                 <div className="flex flex-col gap-10">
                     <div className="flex cursor-pointer items-center h-[70px] w-[590px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
