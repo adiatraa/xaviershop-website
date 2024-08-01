@@ -127,8 +127,8 @@ function CartPage() {
                                             <div className='flex gap-4 items-center justify-center'>
                                                 <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
                                                     <button className='bg-transparent'><IoAddOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
-                                                    <h1 className='font-bold text-blue-500 text-lg'>1</h1>
-                                                    <button className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
+                                                    <h1 className='font-bold text-blue-500 text-lg'>{cart.quantity}</h1>
+                                                    <button onClick={() => handleDelete(cart.id)} className='bg-transparent'><IoRemoveOutline className="h-6 w-6 text-gray-400 hover:text-blue-500" /></button>
                                                 </div>
                                                 <button onClick={() => handleDelete(cart.id)} className='h-[50px] w-[50px] flex gap-10 items-center bg-transparent border border-gray-400 hover:bg-red-500 hover:border-transparent justify-center rounded-xl group'>
                                                     <IoTrashBin className="h-6 w-6 text-gray-400 group-hover:text-white" />

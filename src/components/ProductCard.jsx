@@ -52,7 +52,7 @@ export default function ProductCard({ product }) {
         console.log(carts, "semua cart");
         try {
             const cartFoundIndex = carts.findIndex((el) => {
-                return el.productId === id;
+                return el.productId == id;
             });
             console.log(cartFoundIndex, "<< index cart found")
             const cartFound = carts[cartFoundIndex];
@@ -68,11 +68,11 @@ export default function ProductCard({ product }) {
                         },
                     }
                 )
-                console.log(response.data, "<< resp data post");
                 toast.success("Item added to the cart!");
+                dispatch(fetchCarts());
             } else {
                 const response = await axios.patch(
-                    import.meta.env.VITE_BASE_URL + '/carts/' + id,
+                    import.meta.env.VITE_BASE_URL + '/carts/' + cartFound.id,
                     {
                         quantity: cartFound.quantity + 1,
                     },
@@ -82,8 +82,8 @@ export default function ProductCard({ product }) {
                         },
                     }
                 )
-                console.log(response.data, "<< resp data patch");
-                toast.success("Item added to the cart!");
+                toast.success("Item updated to the cart!");
+                dispatch(fetchCarts()); 
             }
         } catch (err) {
             if (err.response.status === 401) {
