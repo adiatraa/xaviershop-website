@@ -213,6 +213,7 @@ const router = createBrowserRouter([
       const token = localStorage.getItem('access_token');
       if (token) {
         localStorage.removeItem('access_token');
+        localStorage.removeItem('user_role');
         sessionStorage.setItem("alertMessage", "Successfully logged out");
         sessionStorage.setItem("alertType", "success");
       }

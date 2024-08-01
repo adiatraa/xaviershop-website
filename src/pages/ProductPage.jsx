@@ -63,20 +63,26 @@ function ProductPage() {
         return classes.filter(Boolean).join(' ')
     }
 
-    // const { products, setProducts, fetchProducts } = useContext(ProductContext);
-    // const count = useSelector((state) => state.counter.value)
     const { items: products, loading } = useSelector((state) => {
         return {
             items: state.publicProduct.items,
-            loading: state.publicProduct.loading
+            loading: state.publicProduct.loading,
         }
     });
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const { user_role, isAuthenticated } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(fetchPubProducts());
     }, []);
+
+    const handleAdd = () => {
+        if (isAuthenticated && user_role === 'seller') {
+            navigate('/addProduct');
+        } 
+    };
 
 
     return (
@@ -231,13 +237,15 @@ function ProductPage() {
                     </DisclosurePanel>
                     <div className="col-start-1 row-start-1 py-4">
                         <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8 gap-10">
-                            <button type="button" onClick={() => handleAdd()} className="relative z-10 flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">
-                                Add Product
-                                <PlusIcon
-                                    aria-hidden="true"
-                                    className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                />
-                            </button>
+                            {isAuthenticated && user_role === 'seller' && (
+                                <button type="button" onClick={handleAdd} className="relative z-10 flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">
+                                    Add Product
+                                    <PlusIcon
+                                        aria-hidden="true"
+                                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                    />
+                                </button>
+                            )}
                             <Menu as="div" className="relative inline-block">
                                 <div className="flex">
                                     <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -350,7 +358,7 @@ function ProductPage() {
                         </a>
                     </div>
                 </nav>
-            </main>                      
+            </main>
         </div>
     );
 }

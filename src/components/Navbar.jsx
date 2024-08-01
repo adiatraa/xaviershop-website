@@ -5,15 +5,30 @@ import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon } from '@heroicons/reac
 import logo from '../assets/Logo.png';
 import profile from '../assets/profile.jpeg';
 import { setAuth } from '../store/auth-slice';
+import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const userRole = useSelector((state) => state.auth.user_role);
+    const location = useLocation();
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
         dispatch(setAuth(token));
     }, [dispatch]);
+
+    const navSign = (path) => {
+        return location.pathname === path
+            ? 'inline-flex items-center border-b-2 border-[#1977F1] px-1 pt-1 text-sm font-medium text-gray-900'
+            : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700';
+    };
+
+    const navIconSign = (path) => {
+        return location.pathname === path
+            ? 'h-6 w-6 text-blue-500' 
+            : 'h-6 w-6 text-gray-400 group-hover:text-blue-500';
+    };
 
     return (
         <Disclosure as="nav" className="bg-white shadow">
@@ -30,13 +45,14 @@ export default function Navbar() {
                         <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                             <a
                                 href="/"
-                                className="inline-flex items-center border-b-2 border-[#1977F1] px-1 pt-1 text-sm font-medium text-gray-900"
+                                className={navSign('/')}
                             >
                                 Home
                             </a>
                             <a
-                                href="/productPage"
-                                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                                href={userRole === 'seller' ? '/sellerpage' : '/productPage'}
+                                className={navSign(userRole === 'seller' ? '/sellerpage' : '/productPage')}
+
                             >
                                 Products
                             </a>
@@ -49,7 +65,7 @@ export default function Navbar() {
                                     <a href="/cartPage" className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
-                                            className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            className={navIconSign('/cartPage')}
                                         />
                                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                                         <span className="sr-only">items in cart, view bag</span>
