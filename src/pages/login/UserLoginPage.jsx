@@ -6,6 +6,7 @@ import googleLogo from "../../assets/google.png";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../../components/Alert';
+import { toast } from "react-toastify";
 
 function UserLoginPage() {
     const [form, setForm] = useState({
@@ -14,8 +15,6 @@ function UserLoginPage() {
     });
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [alertType, setAlertType] = useState("");
     const navigate = useNavigate();
 
     const togglePassword = () => {
@@ -27,8 +26,7 @@ function UserLoginPage() {
 
         // Validation for 400 Status / Empty Field
         if (!form.email || !form.password) {
-            setAlertMessage("Email and password are required");
-            setAlertType("error");
+            toast.error("Email and password are required");
             return;
         }
 
@@ -49,12 +47,10 @@ function UserLoginPage() {
                 navigate("/");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
-                    setAlertMessage("Invalid email or password");
-                    setAlertType("error");
+                    toast.error("Login failed. Please try again.");
                 } else {
                     console.log(err);
-                    setAlertMessage("Login failed. Please try again.");
-                    setAlertType("error");
+                    toast.error("Login failed. Please try again.");
                 }
             } finally {
                 setLoading(false);
@@ -82,18 +78,6 @@ function UserLoginPage() {
         }
     }
 
-    useEffect(() => {
-        const successAlert = sessionStorage.getItem("alertMessage");
-        const alertType = sessionStorage.getItem("alertType");
-        if (successAlert) {
-            setAlertMessage(successAlert);
-            setAlertType(alertType);
-            sessionStorage.removeItem("alertMessage");
-            sessionStorage.removeItem("alertType");
-        }
-    }, []);
-
-
     function handleCredentialResponse(response) {
         console.log("Encoded JWT ID token: " + response.credential);
         const googleToken = response.credential;
@@ -115,12 +99,10 @@ function UserLoginPage() {
             login();
         } catch (err) {
             if (err.response && err.response.status === 401) {
-                setAlertMessage("Invalid email or password");
-                setAlertType("error");
+                toast.error("Invalid email or password. Please try again.");
             } else {
                 console.log(err);
-                setAlertMessage("Login failed. Please try again.");
-                setAlertType("error");
+                toast.error("Login failed. Please try again.");
             }
         } finally {
             setLoading(false);
@@ -141,7 +123,6 @@ function UserLoginPage() {
 
     return (
         <div>
-            <Alert message={alertMessage} type={alertType} />
             <div className="flex w-full h-screen">
                 <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
                     <div className="w-80 h-80 bg-gradient-to-tr from-[#1977F1] to-[#000000] rounded-full animate-bounce" />

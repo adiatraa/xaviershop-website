@@ -5,7 +5,6 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import axios from "axios";
 import { useNavigate, useLocation, redirect } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import Alert from '../components/Alert';
 
 function UserRegisterPage() {
     const location = useLocation();
@@ -20,8 +19,6 @@ function UserRegisterPage() {
     });
 
     const [showPassword, setShowPassword] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [alertType, setAlertType] = useState("");
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
@@ -51,11 +48,10 @@ function UserRegisterPage() {
                 
             } catch (err) {
                 if (err.response && err.response.status === 400) {
-                    setAlertMessage("Registration failed: " + err.response.data.message);
+                    toast.error("Login failed. Please try again.");
                 } else {
-                    setAlertMessage("Registration failed. Please try again.");
+                    toast.error("Login failed. Please try again.");
                 }
-                setAlertType("error");
             }
         }
         register();
@@ -63,7 +59,6 @@ function UserRegisterPage() {
 
     return (
         <div>
-            <Alert message={alertMessage} type={alertType} />
             <div className="flex w-full h-screen">
                 <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
                     <div className="w-80 h-80 bg-gradient-to-tr from-[#1977F1] to-[#000000] rounded-full animate-bounce" />

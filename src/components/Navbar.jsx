@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/Logo.png';
+import userProfile from '../assets/userProfile.jpeg';
 import profile from '../assets/profile.jpeg';
-import { setAuth } from '../store/auth-slice';
+import { setAuth, setRole } from '../store/auth-slice';
 import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {
@@ -15,7 +16,9 @@ export default function Navbar() {
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
+        const role = localStorage.getItem('user_role');
         dispatch(setAuth(token));
+        dispatch(setRole(role));
     }, [dispatch]);
 
     const navSign = (path) => {
@@ -90,7 +93,7 @@ export default function Navbar() {
                                         <span className="sr-only">Open user menu</span>
                                         <img
                                             alt=""
-                                            src={profile}
+                                            src={userRole === 'seller' ? profile : userProfile}
                                             className="h-8 w-8 rounded-full object-cover"
                                         />
                                     </MenuButton>
@@ -169,7 +172,7 @@ export default function Navbar() {
                         <div className="flex-shrink-0">
                             <img
                                 alt=""
-                                src={profile}
+                                src={userRole === 'seller' ? profile : userProfile}
                                 className="h-10 w-10 rounded-full"
                             />
                         </div>
