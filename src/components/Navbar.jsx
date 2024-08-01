@@ -65,7 +65,7 @@ export default function Navbar() {
                                 </button>
                             </>
                         )}
-                        
+
                         {isAuthenticated ? (
                             <Menu as="div" className="relative ml-3">
                                 <div>
@@ -101,7 +101,7 @@ export default function Navbar() {
                                 </MenuItems>
                             </Menu>
                         ) : (
-                            <a href="/login" className="text-sm font-bold rounded-lg text-white bg-blue-500 py-2 px-7 hover:text-white">
+                            <a href="/login" className="text-sm font-bold rounded-lg text-white bg-blue-500 py-2 px-7 hover:text-white shadow-[0px_2px_30px_-7px_rgb(59_130_246)]">
                                 Login
                             </a>
                         )}

@@ -7,7 +7,7 @@ function formatPrice(price) {
 
 const FlashProductCard = ({ product }) => {
     return (
-        <Link to={`/productDetail/${product.id}`}>
+        <Link to={"/productPage/" + product.id}>
         <div className="w-[428px] h-[168px] bg-white rounded-2xl hover:text-black">
             <div className="p-2 flex gap-2 items-center">
                 <div className="h-[150px] w-[150px] flex justify-center items-center">
