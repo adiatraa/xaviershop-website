@@ -233,7 +233,7 @@ function SellerLoginPage() {
                     <div id="buttonDiv"></div>
                     <div className="flex justify-center text-sm mt-[-10px]">
                         <span className="text-gray-500">Don't have an account?</span>
-                        <a href="/register" className="ml-1 font-semibold text-[#1977F1]">Sign Up</a>
+                        <a href="/seller/register" className="ml-1 font-semibold text-[#1977F1]">Sign Up</a>
                     </div>
                 </div>
             </div>
