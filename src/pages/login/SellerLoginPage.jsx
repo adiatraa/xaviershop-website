@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logoImage from "../../assets/Logo.png";
-import googleLogo from "../../assets/google.png";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from '../../components/Alert';
+import { toast } from "react-toastify";
 
 function SellerLoginPage() {
     const [form, setForm] = useState({
@@ -27,8 +27,7 @@ function SellerLoginPage() {
 
         // Validation for 400 Status / Empty Field
         if (!form.email || !form.password) {
-            setAlertMessage("Email and password are required");
-            setAlertType("error");
+            toast.error("Email and password are required");
             return;
         }
 
@@ -46,15 +45,13 @@ function SellerLoginPage() {
                 const userRole = response.data.role;
                 localStorage.setItem("access_token", accessToken);
                 localStorage.setItem("user_role", userRole);
-                navigate("/sellerPage");
+                navigate("/");
             } catch (err) {
                 if (err.response && err.response.status === 401) {
-                    setAlertMessage("Invalid email or password");
-                    setAlertType("error");
+                    toast.error("Invalid email or password");
                 } else {
                     console.log(err);
-                    setAlertMessage("Login failed. Please try again.");
-                    setAlertType("error");
+                    toast.error("Login failed. Please try again.");
                 }
             } finally {
                 setLoading(false);
@@ -83,16 +80,16 @@ function SellerLoginPage() {
     }
 
     useEffect(() => {
-        const successAlert = sessionStorage.getItem("alertMessage");
-        const alertType = sessionStorage.getItem("alertType");
-        if (successAlert) {
-            setAlertMessage(successAlert);
-            setAlertType(alertType);
-            sessionStorage.removeItem("alertMessage");
-            sessionStorage.removeItem("alertType");
-        }
+        window.google.accounts.id.initialize({
+            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            callback: handleCredentialResponse
+        });
+        window.google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "large" }
+        );
+        window.google.accounts.id.prompt();
     }, []);
-
 
     function handleCredentialResponse(response) {
         console.log("Encoded JWT ID token: " + response.credential);
@@ -115,45 +112,30 @@ function SellerLoginPage() {
             login();
         } catch (err) {
             if (err.response && err.response.status === 401) {
-                setAlertMessage("Invalid email or password");
-                setAlertType("error");
+                toast.error("Invalid email or password");
             } else {
                 console.log(err);
-                setAlertMessage("Login failed. Please try again.");
-                setAlertType("error");
+                toast.error("Login failed. Please try again.");
             }
         } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => {
-        window.google.accounts.id.initialize({
-            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-            callback: handleCredentialResponse
-        });
-        window.google.accounts.id.renderButton(
-            document.getElementById("buttonDiv"), // Use a unique ID for the div
-            { theme: "outline", size: "large" }
-        );
-        window.google.accounts.id.prompt(); // also display the One Tap dialog
-    }, []);
-
     return (
-        <div>
-            <Alert message={alertMessage} type={alertType} />
-            <div className="flex w-full h-screen">
-                <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
+        <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col lg:flex-row w-full h-full">
+                <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-200 min-h-screen">
                     <div className="w-80 h-80 bg-gradient-to-tr from-[#1977F1] to-[#000000] rounded-full animate-bounce" />
-                    <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />
+                    <div className="w-1/2 h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />
                 </div>
-                <div className="w-full flex flex-col gap-8 p-40 lg:w-1/2">
+                <div className="w-full flex flex-col justify-center gap-8 p-8 sm:p-16 lg:px-16 lg:py-8 lg:w-1/2 min-h-screen">
                     <div className="flex justify-center items-center">
-                        <img src={logoImage} alt="" className="h-14 w-15" />
+                        <img src={logoImage} alt="Logo" className="h-14 w-15" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold">Welcome to Xavier Shop</h1>
-                        <p className="text-gray-500">Enjoy your shopping anytime!</p>
+                        <h1 className="text-2xl font-bold text-center lg:text-left">Welcome to Xavier Shop</h1>
+                        <p className="text-gray-500 text-center lg:text-left">Enjoy your shopping anytime!</p>
                     </div>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="relative">
@@ -208,11 +190,11 @@ function SellerLoginPage() {
                         <div className="relative">
                             <label
                                 htmlFor="role"
-                                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                                className="absolute z-10 -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
                             >
                                 Role
                             </label>
-                            <div className="">
+                            <div className="relative">
                                 <select
                                     id="role"
                                     name="role"
@@ -249,13 +231,9 @@ function SellerLoginPage() {
                         </div>
                     </div>
                     <div id="buttonDiv"></div>
-                    {/* <div id="buttonDiv" className="w-full mt-[-20px] flex items-center justify-center py-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50">
-                        <img src={googleLogo} alt="Google" className="h-5 w-5 mr-2" />
-                        <span className="text-sm font-medium text-gray-700">Sign in with Google</span>
-                    </div> */}
                     <div className="flex justify-center text-sm mt-[-10px]">
                         <span className="text-gray-500">Don't have an account?</span>
-                        <a href="/seller/register" className="ml-1 font-semibold text-[#1977F1] hover:underline">Sign Up</a>
+                        <a href="/register" className="ml-1 font-semibold text-[#1977F1]">Sign Up</a>
                     </div>
                 </div>
             </div>

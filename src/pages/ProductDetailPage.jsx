@@ -22,6 +22,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsDetail, fetchPubProductsDetail } from '../store/public-product-slice';
 import axios from 'axios';
+import { fetchCarts } from '../store/cart-slice';
 
 const products = {
     name: 'iPhone 15 Pro',
@@ -100,13 +101,12 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-// const formatPrice = {(p)} => `Rp ${price.toLocaleString('id-ID')}`;
-
 function ProductDetailPage() {
     const [pages, setPages] = useState([]);
     const [selectedColor, setSelectedColor] = useState(products.colors[0])
     const params = useParams();
     const dispatch = useDispatch();
+    const userRole = localStorage.getItem("user_role");
     const { product, loading } = useSelector((state) => {
         return {
             product: state.publicProduct.itemsDetail,
@@ -125,6 +125,9 @@ function ProductDetailPage() {
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchPubProductsDetail(params.id));
+        if(userRole === "seller" || userRole === "user") {
+            dispatch(fetchCarts());
+        }
     }, []);
 
     return (
