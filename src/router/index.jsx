@@ -138,29 +138,6 @@ const router = createBrowserRouter([
       }
     }
   },
-  // {
-  //   path: "/buyerPage",
-  //   element: <BuyerPage />,
-  //   loader: () => {
-  //     const token = localStorage.getItem('access_token');
-  //     const redirectUrl = "/";
-  //     if (!token) {
-  //       sessionStorage.setItem("alertMessage", "Please login to access this page");
-  //       sessionStorage.setItem("alertType", "error");
-  //       return redirect(redirectUrl);
-  //     } else {
-  //       try {
-  //         const decoded = jwtDecode(token);
-  //         console.log("Token decoded successfully:", decoded);
-  //         return null;
-  //       } catch (err) {
-  //         sessionStorage.setItem("alertMessage", "Please login to access this page");
-  //         sessionStorage.setItem("alertType", "error");
-  //         return redirect(redirectUrl);
-  //       }
-  //     }
-  //   }
-  // },
   {
     path: "/addProduct",
     element: <ProductFormPage />,
