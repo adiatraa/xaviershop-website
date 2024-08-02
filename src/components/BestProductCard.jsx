@@ -8,13 +8,13 @@ function formatPrice(price) {
 const BestDealCard = ({ product }) => {
     return (
         <Link to={"/productPage/" + product.id} className="hover:text-black">
-            <div className="w-[312px] p-2 mt-8 flex gap-6 items-center">
-                <div className="h-[160px] w-[150px] flex justify-center items-center">
+            <div className="w-[312px] min-[2000px]:w-[312px] min-[1500px]:w-[280px] p-2 mt-8 flex gap-12 min-[2000px]:gap-12 min-[1500px]:gap-10 items-center">
+                <div className="h-[160px] w-[150px] min-[1500px]:h-[140px] min-[2000px]:h-[160px] min-[1500px]:w-[90px] flex justify-center items-center">
                     <img src={product.imgUrl} alt={product.name} className="rounded-3xl max-w-fit max-h-full" />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <div className="flex flex-col gap-12">
-                        <h1 className="font-semibold font-prompt text-lg">{product.name}</h1>
+                    <div className="flex flex-col gap-12 min-[1500px]:gap-8">
+                        <h1 className="font-semibold font-prompt text-lg min-[2000px]:text-lg min-[1500px]:text-[16px]">{product.name}</h1>
                         <h1 className="font-semibold text-blue-500">{formatPrice(product.price)}</h1>
                     </div>
                     <button

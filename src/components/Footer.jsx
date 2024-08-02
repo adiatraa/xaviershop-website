@@ -226,7 +226,7 @@ const Footer = () => {
                         <div>
                             <h3 className="text-lg font-semibold leading-6 text-gray-900">Contact</h3>
                             <p className="mt-6 text-gray-600 leading-6">Contact us for all your electronics needs, from phones, laptops, and earphones to watches and tablets.</p>
-                            <div className="mt-6 flex gap-6">
+                            <div className="mt-6 flex gap-6 min-[2000px]:flex min-[1500px]:hidden">
                                 <IoCall className="h-10 w-10" />
                                 <div>
                                     <p className="text-gray-600 leading-6">Have any question?</p>

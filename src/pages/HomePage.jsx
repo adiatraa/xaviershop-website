@@ -31,17 +31,18 @@ function HomePage() {
     return (
         <div>
             <Navbar />
+            {/* Hero Section */}
             <div className="lg:h-[45vw] h-[180vw] w-full flex flex-col lg:flex-row">
-                <div className="w-full lg:w-1/2 h-full bg-[#F3F4F6] p-8 lg:p-40 flex flex-col gap-8 lg:gap-12">
+                <div className="w-full lg:w-1/2  h-full bg-[#F3F4F6] p-8 min-[2000px]:p-40 min-[1500px]:p-20 flex flex-col gap-8 lg:gap-12">
                     <div>
                         <div className="flex flex-row lg:flex-row items-start lg:items-center gap-4 lg:gap-12">
-                            <h1 className="text-4xl z-10 lg:text-[84px] font-extrabold text-black leading-tight">Grab</h1>
+                            <h1 className="text-4xl z-10 lg:text-[84px] min-[2000px]:text-[84px] min-[1500px]:text-[70px] font-extrabold text-black leading-tight">Grab</h1>
                             <div className="h-11 lg:h-[80px] w-24 lg:w-[165px] flex bg-[#1977F1] items-center justify-center rounded-xl lg:rounded-3xl -rotate-2 ml-[-24px] lg:ml-[-62px]">
                                 <h1 className="text-2xl lg:text-[50px]  font-extrabold text-white">50%</h1>
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl lg:text-[84px] font-extrabold text-black leading-tight">Off Smartphone <br className="hidden lg:block" /> Collection</h1>
+                            <h1 className="text-4xl lg:text-[84px] min-[2000px]:text-[84px] min-[1500px]:text-[70px] font-extrabold text-black leading-tight">Off Smartphone <br className="hidden lg:block" /> Collection</h1>
                         </div>
                     </div>
                     <div>
@@ -58,7 +59,7 @@ function HomePage() {
                 </div>
                 <div className="w-full lg:w-1/2 h-full bg-[#F3F4F6] flex items-center justify-center">
                     <div className="relative flex items-center justify-center">
-                        <div className="z-10 mt-20 lg:mt-[250px] flex-col gap-3 hidden lg:flex">
+                        <div className="z-10 mt-20 lg:mt-[250px] flex-col gap-3 hidden lg:flex min-[1500px]:mr-[30px] min-[2000px]:mr-[-40px]">
                             <div className="bg-white rounded-xl p-3 rotate-[-2deg] shadow-lg">
                                 <h1 className="text-xl lg:text-[34px] font-semibold text-black">Highest</h1>
                             </div>
@@ -66,10 +67,12 @@ function HomePage() {
                                 <h1 className="text-xl lg:text-[34px] font-semibold text-white">Quality</h1>
                             </div>
                         </div>
-                        <img src={displayThumb} className="ml-[-40px] lg:ml-[-80px] hidden lg:block" alt="Display Thumb" />
+                        <img src={displayThumb} className="ml-[-40px] lg:ml-[-80px] hidden lg:block min-[2000px]:ml-[-40px] min-[1500px]:ml-[-120px] min-[2000px]:w-[800px]  min-[1500px]:w-[600px]" alt="Display Thumb" />
                     </div>
                 </div>
             </div>
+
+            {/* What we provide Section */}
             <div className="h-auto max-w-full bg-bg-what bg-cover flex flex-col items-center py-20 gap-24">
                 <div>
                     <h1 className="text-4xl lg:text-[84px] font-extrabold text-black">What <span className="text-blue-500">we</span> provide?</h1>
@@ -97,26 +100,26 @@ function HomePage() {
                     </div>
                 </div>
             </div>
-            <div className="h-auto max-w-full px-6 lg:px-48 py-12">
+
+            {/* Best Deal Section */}
+            <div className="h-auto max-w-full px-6 lg:px-48 py-12 min-[2000px]:px-48 min-[1500px]:px-24">
                 <h1 className="text-2xl lg:text-3xl font-prompt font-bold mb-6">Best Deals</h1>
                 <section aria-labelledby="best-deals-heading">
                     <h2 id="best-deals-heading" className="sr-only">Best Deals</h2>
-                    <div className="flex flex-wrap gap-6 lg:gap-10">
-                        {products && products.slice(0, 5).map((product, idx) => (
-                            <BestDealCard key={idx} product={product} />
-                        ))}
-                    </div>
-                    <div className="flex flex-wrap gap-6 lg:gap-10 mt-6">
-                        {products && products.slice(6, 11).map((product, idx) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-10">
+                        {products && products.slice(0, 10).map((product, idx) => (
                             <BestDealCard key={idx} product={product} />
                         ))}
                     </div>
                 </section>
             </div>
+
+
+            {/* Flash Sale Section */}
             <div className="h-auto max-w-full px-6 lg:px-48 py-12">
                 <div className="relative h-auto w-full bg-bg-flash bg-no-repeat rounded-3xl p-6 lg:p-20">
                     <div className="absolute inset-0 bg-blue-500 opacity-90 rounded-3xl"></div>
-                    <div className="relative z-10 flex flex-col lg:flex-row gap-6 lg:gap-20">
+                    <div className="relative z-10 flex flex-col lg:flex-row min-[2000px]:flex-row min-[1500px]:flex-col gap-6 lg:gap-20">
                         <div className="flex flex-col gap-6">
                             <h1 className="text-3xl lg:text-4xl font-semibold text-white">Flash Sale</h1>
                             <p className="text-base lg:text-lg text-white">What are you waiting for? Get huge discounts on smartphones, laptops, <br /> tablets, and more at our Flash Sale now! Limited-time offers, hurry <br /> before they're gone.</p>
