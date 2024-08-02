@@ -2,7 +2,7 @@ import { HomeIcon } from '@heroicons/react/20/solid';
 
 export default function Breadcrumb({ pages }) {
   return (
-    <nav className="flex mt-24 ml-48" aria-label="Breadcrumb">
+    <nav className="flex mt-24 ml-48 min-[2000px]:ml-48 min-[1500px]:ml-[4rem]" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li>
           <div>
