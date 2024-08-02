@@ -141,7 +141,7 @@ const Footer = () => {
             <h2 id="footer-heading" className="sr-only">
                 Footer
             </h2>
-            <div className="mx-32 max-w-screen px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+            <div className="lg:mx-32 mx-auto max-w-screen px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8 space-x-96">
                     <div className="space-y-8">
                         <div className="flex gap-6">
@@ -164,7 +164,7 @@ const Footer = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div className="mt-16 hidden lg:grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
                         <div className="md:grid md:grid-cols-2 md:gap-8">
                             <div>
                                 <h3 className="text-lg font-semibold leading-6 text-gray-900">Pages</h3>
