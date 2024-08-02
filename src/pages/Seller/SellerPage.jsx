@@ -63,9 +63,6 @@ function SellerPage() {
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
-
-    // const { products, setProducts, fetchProducts } = useContext(ProductContext);
-    // const count = useSelector((state) => state.counter.value)
     const { items: products, loading } = useSelector((state) => {
         return {
             items: state.product.items,
@@ -75,10 +72,6 @@ function SellerPage() {
     const carts = useSelector((state) => state.cart.items);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    // function handleAdd(){
-    //     return navigate('/addProduct')
-    // }
 
     const handleAdd = () => {
         navigate("/addProduct");
@@ -91,8 +84,6 @@ function SellerPage() {
         dispatch(fetchCarts());
     }, []);
     
-    // Debugging
-    console.log('Carts:', carts);
 
 
     return (

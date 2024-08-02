@@ -50,7 +50,6 @@ export function fetchCarts() {
         }
       );
       const cart = response.data;
-      console.log("Fetched carts:", cart); // Debugging
       dispatch(fetchCart(cart));
     } catch (error) {
       console.error("Failed to fetch cart list", error);
@@ -117,7 +116,7 @@ export function updateCartQuantity(id, newQuantity) {
 }
 
 export const selectCartItemCount = (state) => {
-  // Pastikan state.cart.items adalah array yang valid
+    //Check Undefine Value on Array
   if (!Array.isArray(state.cart.items)) {
     return 0;
   }
