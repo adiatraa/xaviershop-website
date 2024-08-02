@@ -34,7 +34,8 @@ export const cartSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { fetchCart, cartsDelete, removeCartItem, updateCartItem } = cartSlice.actions;
+export const { fetchCart, cartsDelete, removeCartItem, updateCartItem } =
+  cartSlice.actions;
 
 export function fetchCarts() {
   return async (dispatch) => {
@@ -49,11 +50,10 @@ export function fetchCarts() {
         }
       );
       const cart = response.data;
+      console.log("Fetched carts:", cart); // Debugging
       dispatch(fetchCart(cart));
-      console.log(cart);
     } catch (error) {
       console.error("Failed to fetch cart list", error);
-    } finally {
     }
   };
 }
@@ -74,6 +74,7 @@ export function deleteCarts(id) {
       if (response.status === 200) {
         dispatch(cartsDelete(id));
         toast.success("Success delete this cart.");
+        console.log(`Cart with id ${id} deleted successfully.`);
       } else {
         toast.error("Error deleting cart.");
       }
@@ -85,38 +86,46 @@ export function deleteCarts(id) {
 }
 
 export function updateCartQuantity(id, newQuantity) {
-    return async (dispatch, getState) => {
-      try {
-        const token = localStorage.getItem("access_token");
-        const response = await axios.patch(
-          import.meta.env.VITE_BASE_URL + "/carts/" + id,
-          { quantity: newQuantity },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-  
-        if (response.status === 200) {
-          if (newQuantity > 0) {
-            dispatch(updateCartItem({ id, quantity: newQuantity }));
-          } else {
-            dispatch(removeCartItem(id));
-          }
-          toast.success("Cart updated successfully.");
-        } else {
-          toast.error("Error updating cart.");
+  return async (dispatch, getState) => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await axios.patch(
+        import.meta.env.VITE_BASE_URL + "/carts/" + id,
+        { quantity: newQuantity },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         }
-      } catch (err) {
+      );
+
+      if (response.status === 200) {
+        if (newQuantity > 0) {
+          dispatch(updateCartItem({ id, quantity: newQuantity }));
+        } else {
+          dispatch(removeCartItem(id));
+        }
+        toast.success("Cart updated successfully.");
+      } else {
         toast.error("Error updating cart.");
-        console.error(err);
       }
-    };
+    } catch (err) {
+      toast.error("Error updating cart.");
+      console.error(err);
+    }
+  };
+}
+
+export const selectCartItemCount = (state) => {
+  // Pastikan state.cart.items adalah array yang valid
+  if (!Array.isArray(state.cart.items)) {
+    return 0;
   }
 
-  export const selectCartItemCount = (state) => {
-    return state.cart.items.reduce((total, item) => total + item.quantity, 0);
-  };
+  return state.cart.items.reduce(
+    (total, item) => total + (item.quantity || 0),
+    0
+  );
+};
 
 export default cartSlice.reducer;

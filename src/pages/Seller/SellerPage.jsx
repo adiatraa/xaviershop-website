@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetch, fetchLoading, fetchProducts, setFormActionValue, setFormReset } from '../../store/product-slice'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { fetchCarts } from '../../store/cart-slice';
 
 const filters = {
     price: [
@@ -87,7 +88,11 @@ function SellerPage() {
 
     useEffect(() => {
         dispatch(fetchProducts());
+        dispatch(fetchCarts());
     }, []);
+    
+    // Debugging
+    console.log('Carts:', carts);
 
 
     return (
