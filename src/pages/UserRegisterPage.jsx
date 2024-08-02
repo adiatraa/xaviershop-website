@@ -46,7 +46,7 @@ function UserRegisterPage() {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row h-screen">
+        <div className="flex flex-col lg:flex-row h-full">
             <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-200 relative">
                 <div className="w-80 h-80 bg-gradient-to-tr from-[#1977F1] to-[#000000] rounded-full animate-bounce" />
                 <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />

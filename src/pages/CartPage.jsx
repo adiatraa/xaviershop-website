@@ -87,7 +87,7 @@ function CartPage() {
         <div>
             <Navbar />
             <Breadcrumb pages={pages} />
-            <div className="flex mt-16 ml-[11rem] min-[2000px]:ml-[11rem] min-[1500px]:ml-[4rem] gap-10">
+            <div className="flex mt-16 ml-[4rem] gap-10">
                 {carts.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-[300px] w-[1100px] bg-gray-100 border border-gray-300 rounded-xl p-6">
                         <h1 className="text-xl font-bold text-blue-500">Cart is empty, get your product asap!</h1>
@@ -96,7 +96,7 @@ function CartPage() {
                 ) : (
                     <>
                         <div className='flex flex-col gap-10'>
-                            <div className="flex items-center space-x-[700px] h-[70px] w-[1100px] bg-transparent p-6 rounded-xl border border-gray-400">
+                            <div className="flex items-center space-x-[400px] h-[70px] lg:w-[800px] bg-transparent p-6 rounded-xl border border-gray-400">
                                 <div className="flex gap-8">
                                     <input
                                         id="candidates"
@@ -116,7 +116,7 @@ function CartPage() {
                             </div>
                             {carts && 
                             carts.map((cart) => (
-                                <div key={cart.id} className='flex gap-4 h-[220px] w-[1100px] border border-gray-500 rounded-xl p-6'>
+                                <div key={cart.id} className='flex gap-4 h-[220px] lg:w-[800px] border border-gray-500 rounded-xl p-6'>
                                     <div className='flex gap-4 justify-center items-center'>
                                         <input
                                             id="candidates"
@@ -132,7 +132,7 @@ function CartPage() {
                                     <div className='flex flex-col p-2 gap-5'>
                                         <h1 className="font-bold text-xl font-montserrat">{cart.product?.name}</h1>
                                         <h1 className="font-bold text-blue-500 text-xl">{cart.product ? formatPrice(cart.product.price) : 'N/A'}</h1>
-                                        <div className='flex space-x-[27rem] justify-center items-center'>
+                                        <div className='flex space-x-[10rem] justify-center items-center'>
                                             <a href="#" className="text-gray-400 font-semibold hover:text-blue-500">+Add note</a>
                                             <div className='flex gap-4 items-center justify-center'>
                                                 <div className='h-[50px] w-[180px] flex gap-10 items-center border border-gray-400 p-4 rounded-xl'>
@@ -153,8 +153,8 @@ function CartPage() {
                             ))}
                         </div>
                         <div className="flex flex-col gap-10">
-                            <div className="flex cursor-pointer items-center h-[70px] w-[590px] min-[2000px]:w-[590px] min-[1500px]:w-[440px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
-                                <div className="flex space-x-80 min-[2000px]:space-x-80 min-[1500px]:space-x-40">
+                            <div className="flex cursor-pointer items-center h-[70px] lg:w-[390px] min-[2000px]:w-[590px] min-[1500px]:w-[440px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
+                                <div className="flex lg:space-x-32 min-[2000px]:space-x-80 min-[1500px]:space-x-40">
                                     <div className="flex gap-6">
                                         <IoTicket className="h-6 w-6 text-blue-500" />
                                         <h1 className="font-bold text-blue-500">I have promo code</h1>
@@ -162,9 +162,9 @@ function CartPage() {
                                     <IoCaretForward className="h-6 w-6 text-blue-500" />
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-10 h-[280px] w-[590px] min-[2000px]:w-[590px] min-[1500px]:w-[440px] p-6 rounded-xl border border-gray-400">
+                            <div className="flex flex-col gap-10 h-[280px] lg:w-[390px] ] min-[2000px]:w-[590px] min-[1500px]:w-[440px] p-6 rounded-xl border border-gray-400">
                                 <h1 className="font-bold text-xl">Shopping Summary</h1>
-                                <div className='flex items-center min-[2000px]:space-x-80 min-[1500px]:space-x-40'>
+                                <div className='flex items-center lg:space-x-32 min-[2000px]:space-x-80 min-[1500px]:space-x-40'>
                                     <h1 className='font-semibold'>Total</h1>
                                     <h1 className='text-2xl text-blue-500 font-bold'>{formatPrice(totalPrice)}</h1>
                                 </div>
