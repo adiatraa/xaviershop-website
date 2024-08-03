@@ -99,7 +99,7 @@ export function fetchProducts(navigate) {
 
     try {
       const response = await axios.get(
-        import.meta.env.VITE_BASE_URL + "/products?page[number]=2&category=1",
+        import.meta.env.VITE_BASE_URL + "/products?page[number]=1&category=1",
         {
           headers: {
             Authorization: "Bearer " + token,

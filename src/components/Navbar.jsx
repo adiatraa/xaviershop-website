@@ -6,7 +6,7 @@ import logo from '../assets/Logo.png';
 import userProfile from '../assets/userProfile.jpeg';
 import profile from '../assets/profile.jpeg';
 import { setAuth, setRole } from '../store/auth-slice';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { selectCartItemCount } from '../store/cart-slice';
 
 export default function Navbar() {
@@ -48,33 +48,33 @@ export default function Navbar() {
                             />
                         </div>
                         <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                            <a
-                                href="/"
+                            <Link
+                                to="/"
                                 className={navSign('/')}
                             >
                                 Home
-                            </a>
-                            <a
-                                href={userRole === 'seller' ? '/sellerpage' : '/productPage'}
+                            </Link>
+                            <Link
+                                to={userRole === 'seller' ? '/sellerpage' : '/productPage'}
                                 className={navSign(userRole === 'seller' ? '/sellerpage' : '/productPage')}
 
                             >
                                 Products
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="hidden sm:ml-6 sm:flex sm:items-center gap-2">
                         {isAuthenticated && (
                             <>
                                 <div className="flow-root">
-                                    <a href="/cartPage" className="group -m-2 flex items-center p-2">
+                                    <Link to="/cartPage" className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
                                             className={navIconSign('/cartPage')}
                                         />
                                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cartItemCount}</span>
                                         <span className="sr-only">items in cart, view bag</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <button
                                     type="button"
@@ -105,26 +105,26 @@ export default function Navbar() {
                                     className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                 >
                                     <MenuItem>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        <Link to="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                                             Your Profile
-                                        </a>
+                                        </Link>
                                     </MenuItem>
                                     <MenuItem>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        <Link to="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                                             Settings
-                                        </a>
+                                        </Link>
                                     </MenuItem>
                                     <MenuItem>
-                                        <a href="/logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        <Link to="/logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                                             Sign out
-                                        </a>
+                                        </Link>
                                     </MenuItem>
                                 </MenuItems>
                             </Menu>
                         ) : (
-                            <a href="/login" className="text-sm font-bold rounded-lg text-white bg-blue-500 py-2 px-7 hover:text-white shadow-[0px_2px_30px_-7px_rgb(59_130_246)]">
+                            <Link to="/login" className="text-sm font-bold rounded-lg text-white bg-blue-500 py-2 px-7 hover:text-white shadow-[0px_2px_30px_-7px_rgb(59_130_246)]">
                                 Login
-                            </a>
+                            </Link>
                         )}
                     </div>
                     <div className="-mr-2 flex items-center sm:hidden">

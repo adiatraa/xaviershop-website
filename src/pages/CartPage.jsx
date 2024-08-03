@@ -154,7 +154,7 @@ function CartPage() {
                         </div>
                         <div className="flex flex-col gap-10">
                             <div className="flex cursor-pointer items-center h-[70px] lg:w-[390px] min-[2000px]:w-[590px] min-[1500px]:w-[440px] bg-[#F3F8FF] p-6 rounded-xl border-2 border-blue-500">
-                                <div className="flex lg:space-x-32 min-[2000px]:space-x-80 min-[1500px]:space-x-40">
+                                <div className="flex lg:space-x-28 min-[2000px]:space-x-80 min-[1500px]:space-x-40">
                                     <div className="flex gap-6">
                                         <IoTicket className="h-6 w-6 text-blue-500" />
                                         <h1 className="font-bold text-blue-500">I have promo code</h1>

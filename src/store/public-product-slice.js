@@ -34,7 +34,7 @@ export function fetchPubProducts() {
 
     try {
       const response = await axios.get(
-        import.meta.env.VITE_BASE_URL + "/pub/products?category=1&page[number]=2"
+        import.meta.env.VITE_BASE_URL + "/pub/products?page[number]=1&category=1"
       );
       const products = response.data.rows;
       dispatch(fetchProducts(products));
