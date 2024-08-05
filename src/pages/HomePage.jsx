@@ -57,7 +57,7 @@ function HomePage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-1/2 h-full bg-[#F3F4F6] flex items-center justify-center">
+                <div className="w-full lg:w-1/2 h-[45vw] bg-[#F3F4F6] flex items-center justify-center">
                     <div className="relative flex items-center justify-center">
                         <div className="z-10 mt-20 lg:mt-[250px] flex-col gap-3 hidden lg:flex min-[1500px]:mr-[30px] min-[2000px]:mr-[-40px]">
                             <div className="bg-white rounded-xl p-3 rotate-[-2deg] shadow-lg">
@@ -67,7 +67,8 @@ function HomePage() {
                                 <h1 className="text-xl lg:text-[34px] font-semibold text-white">Quality</h1>
                             </div>
                         </div>
-                        <img src={displayThumb} className="ml-[-40px] lg:ml-[-80px] lg:w-[600px] hidden lg:block min-[2000px]:ml-[-40px] min-[1500px]:w-[400px]" alt="Display Thumb" />
+                        <img src={displayThumb} className="ml-[-40px] lg:ml-[-80px] hidden lg:block xl:w-[600px] min-[2000px]:ml-[-40px] min-[1500px]:ml-[-120px] min-[2000px]:w-[800px]  min-[1500px]:w-[600px]" alt="Display Thumb" />
+                        {/* <img src={displayThumb} className="ml-[-40px] lg:ml-[-80px] lg:w-[600px] hidden lg:block min-[2000px]:ml-[-40px] min-[1500px]:w-[400px]" alt="Display Thumb" /> */}
                     </div>
                 </div>
             </div>
@@ -106,7 +107,7 @@ function HomePage() {
                 <h1 className="text-2xl lg:text-3xl font-prompt font-bold mb-6">Best Deals</h1>
                 <section aria-labelledby="best-deals-heading">
                     <h2 id="best-deals-heading" className="sr-only">Best Deals</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 lg:gap-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 lg:grid-cols-3 gap-6 lg:gap-10">
                         {products && products.slice(0, 10).map((product, idx) => (
                             <BestDealCard key={idx} product={product} />
                         ))}
@@ -125,7 +126,7 @@ function HomePage() {
                             <p className="text-base lg:text-lg text-white">What are you waiting for? Get huge discounts on smartphones, laptops, <br /> tablets, and more at our Flash Sale now! Limited-time offers, hurry <br /> before they're gone.</p>
                             <h1 className="text-2xl lg:text-4xl font-semibold text-white">05 : 42 : 19</h1>
                         </div>
-                        <div className="relative z-10 lg:flex flex-col lg:flex-col gap-6 lg:gap-10">
+                        <div className="relative z-10 lg:flex flex-col lg:flex-col 2xl:flex-row gap-6 lg:gap-10">
                             {products && products.slice(4, 6).map((product, idx) => (
                                 <FlashProductCard key={idx} product={product} />
                             ))}
