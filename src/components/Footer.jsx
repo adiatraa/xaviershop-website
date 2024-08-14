@@ -170,12 +170,12 @@ const Footer = () => {
                                 <h3 className="text-lg font-semibold leading-6 text-gray-900">Pages</h3>
                                 <ul role="list" className="mt-6 space-y-4">
                                     <li>
-                                        <a href="/home" className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                                        <a href="/" className="text-sm leading-6 text-gray-600 hover:text-gray-900">
                                             Home
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product" className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                                        <a href="/productPage" className="text-sm leading-6 text-gray-600 hover:text-gray-900">
                                             Product
                                         </a>
                                     </li>
