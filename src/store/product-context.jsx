@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 export const ProductContext = createContext({
     products: [],

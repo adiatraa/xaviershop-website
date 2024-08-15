@@ -24,7 +24,6 @@ export const publicProductSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { fetchProducts, fetchLoading, fetchProductsDetail } =
   publicProductSlice.actions;
 

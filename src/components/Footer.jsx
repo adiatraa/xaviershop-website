@@ -75,7 +75,6 @@ const Footer = () => {
             <div className="bg-white mt-16 sm:mt-24">
                 <div className="relative sm:mt-16">
                     <div aria-hidden="true" className="hidden sm:block">
-                        {/* Background decorations, if any */}
                     </div>
                     <div>
                         <div className="relative overflow-hidden bg-blue-500 px-20 py-10 shadow-xl sm:px-20 sm:py-20">

@@ -7,12 +7,10 @@ import ProductDetailPage from '../pages/ProductDetailPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import CartPage from '../pages/CartPage.jsx';
 import { jwtDecode } from 'jwt-decode';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   createBrowserRouter,
   redirect,
-  RouterProvider,
 } from "react-router-dom";
 import SellerLoginPage from '../pages/login/SellerLoginPage.jsx';
 import ProductPage from '../pages/ProductPage.jsx';

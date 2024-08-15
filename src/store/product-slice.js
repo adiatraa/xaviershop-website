@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react";
 import { toast } from "react-toastify";
-import { redirect } from "react-router-dom";
-import { fetchCarts } from "./cart-slice";
 
 export const productSlice = createSlice({
   name: "product",
@@ -109,9 +106,7 @@ export function fetchProducts(navigate) {
       const products = response.data.rows;
       dispatch(fetch(products));
       dispatch(fetchLoading(false));
-      // setProducts(products);
     } catch (error) {
-      // navigate("/login");
       console.error("Failed to fetch products", error);
     }
   };
