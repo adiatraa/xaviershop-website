@@ -17,6 +17,7 @@ export default function ProductFormPage() {
             editId: state.product.editId,
         };
     });
+    //Image Previews Getter
     const imagePreview = useSelector((state) => state.product.form.imagePreview);
 
     function handleCancel() {
@@ -33,6 +34,7 @@ export default function ProductFormPage() {
         formData.append("categoryId", form.categoryId);
         formData.append("image", form.image);
 
+        //Add Product Function
         async function addProduct() {
             try {
                 dispatch(fetchLoading(true));

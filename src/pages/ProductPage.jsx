@@ -75,6 +75,7 @@ function ProductPage() {
     const { user_role, isAuthenticated } = useSelector((state) => state.auth);
 
     useEffect(() => {
+        //Fetch Public Product
         dispatch(fetchPubProducts());
     }, []);
 

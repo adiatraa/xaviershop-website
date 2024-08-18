@@ -22,7 +22,9 @@ function HomePage() {
     const userRole = localStorage.getItem("user_role");
 
     useEffect(() => {
+        //Fetch Public Product
         dispatch(fetchPubProducts());
+        //Fetch Cart base on Role
         if (userRole === "seller" || userRole === "user") {
             dispatch(fetchCarts());
         }

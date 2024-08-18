@@ -20,8 +20,7 @@ import phone1 from '../assets/bestDeal.png'
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsDetail, fetchPubProductsDetail } from '../store/public-product-slice';
-import axios from 'axios';
+import { fetchPubProductsDetail } from '../store/public-product-slice';
 import { fetchCarts } from '../store/cart-slice';
 
 const products = {
