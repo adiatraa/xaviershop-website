@@ -6,7 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
-import Alert from '../components/Alert';
 
 function SellerRegisterPage() {
     const navigate = useNavigate();

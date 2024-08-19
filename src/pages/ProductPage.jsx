@@ -12,10 +12,8 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon, FunnelIcon, PlusIcon } from '@heroicons/react/20/solid'
 import ProductCard from '../components/ProductCard';
-import { ProductContext } from '../store/product-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, fetchPubProducts } from '../store/public-product-slice';
-import axios from 'axios';
+import { fetchPubProducts } from '../store/public-product-slice';
 import { useNavigate } from 'react-router-dom';
 
 const filters = {

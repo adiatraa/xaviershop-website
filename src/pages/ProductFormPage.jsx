@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addForm, editForm, fetchLoading, fetchProducts, setFormActionValue, setFormReset, setImagePreview } from '../store/product-slice';
+import { addForm, fetchLoading, fetchProducts, setFormActionValue, setFormReset, setImagePreview } from '../store/product-slice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
